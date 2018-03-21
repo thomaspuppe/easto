@@ -6,4 +6,11 @@ console.log('Reading content directory')
 fs.readdirSync('./content').forEach(function(filename) {
   const filePath = './content/' + filename
   console.log('- ' + filePath)
+
+  const fileContent = fs.readFileSync(filePath)
+  console.log('  - content: ' + fileContent)
+
+  const targetPath = './output/' + filename.replace('.md', '.html')
+  fs.writeFileSync(targetPath, fileContent)
+  console.log('  - wrote file: ' + targetPath)
 })
