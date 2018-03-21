@@ -1,9 +1,8 @@
 const fs = require('fs')
 
-console.log('Hello World')
 console.log('Reading content directory')
 
-fs.readdirSync('./content').forEach(function(filename) {
+fs.readdirSync('./content').forEach(filename => {
   const filePath = './content/' + filename
   console.log('- ' + filePath)
 
