@@ -8,9 +8,15 @@ fs.readdirSync('./content').forEach(function(filename) {
   console.log('- ' + filePath)
 
   const fileContent = fs.readFileSync(filePath)
-  console.log('  - content: ' + fileContent)
+  const templateContent = fs.readFileSync('./templates/layout.html', {
+    encoding: 'utf-8'
+  })
+  const targetContent = templateContent.replace(
+    '{{ CONTENT_BODY }}',
+    fileContent
+  )
 
   const targetPath = './output/' + filename.replace('.md', '.html')
-  fs.writeFileSync(targetPath, fileContent)
+  fs.writeFileSync(targetPath, targetContent)
   console.log('  - wrote file: ' + targetPath)
 })
