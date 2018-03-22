@@ -28,6 +28,7 @@
     }
   },
   "dependencies": {
-    "marked": "^0.3.18"
+    "marked": "^0.3.18",
+    "yaml-front-matter": "^4.0.0"
   }
 }
