@@ -26,5 +26,8 @@
       "pre-commit": "./node_modules/.bin/clean-slate-lint",
       "pre-rewrite": "./node_modules/.bin/clean-slate-lint"
     }
+  },
+  "dependencies": {
+    "marked": "^0.3.18"
   }
 }
