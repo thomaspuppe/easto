@@ -15,11 +15,6 @@ fs.readdirSync('./content').forEach(filename => {
     encoding: 'utf-8'
   })
 
-  // Split Metadata from Body
-  // const fileContentSplitted = fileContent.split('---')
-  // const fileContentMeta = fileContentSplitted[0]
-  // const fileContentBody = fileContentSplitted[1]
-
   var fileContentFrontmatter = yaml.loadFront(fileContent)
 
   const fileContentHtml = marked(fileContentFrontmatter.__content)
