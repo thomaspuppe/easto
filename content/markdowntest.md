@@ -2,6 +2,7 @@
 
 title: Markdown test page (aka "all blocks")
 date: 2018-03-22
+language: en
 ---
 
 # Heading 1

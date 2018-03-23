@@ -18,9 +18,17 @@ fs.readdirSync('./content').forEach(filename => {
   var fileContentFrontmatter = yaml.loadFront(fileContent)
 
   const fileContentHtml = marked(fileContentFrontmatter.__content)
-  const targetContent = templateContent
-    .replace('{{ CONTENT_BODY }}', fileContentHtml)
-    .replace('{{ META_TITLE }}', fileContentFrontmatter.title)
+  let targetContent = templateContent.replace(
+    '{{ CONTENT_BODY }}',
+    fileContentHtml
+  )
+
+  for (var key in fileContentFrontmatter) {
+    targetContent = targetContent.replace(
+      '{{ META_' + key.toUpperCase() + ' }}',
+      fileContentFrontmatter[key]
+    )
+  }
 
   const targetPath = './output/' + filename.replace('.md', '.html')
   fs.writeFileSync(targetPath, targetContent)
