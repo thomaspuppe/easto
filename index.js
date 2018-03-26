@@ -1,6 +1,7 @@
 const fs = require('fs')
 const marked = require('marked')
 const yaml = require('yaml-front-matter')
+const ncp = require('ncp').ncp
 
 // TODO: Optimize this! Wozu hamma denn deconstruction, map, usw?
 let args = new Map()
@@ -53,4 +54,9 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '.html')
   fs.writeFileSync(targetPath, targetContent)
   LOG('  - wrote file: ' + targetPath)
+})
+
+ncp('./templates/static', './output/static', err => {
+  if (err) return console.error(err)
+  LOG('copied static template files (aka assets)')
 })
