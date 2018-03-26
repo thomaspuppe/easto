@@ -16,12 +16,17 @@ process.argv.forEach(function(val) {
 
 const CONTENT_DIR = args.get('content') || 'content'
 const OUTPUT_DIR = args.get('output') || 'output'
+const VERBOSE = args.get('verbose')
 
-console.log('Reading content directory')
+const LOG = str => {
+  if (VERBOSE) console.log(str)
+}
+
+LOG('Reading content directory')
 
 fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   const filePath = `./${CONTENT_DIR}/${filename}`
-  console.log('- ' + filePath)
+  LOG('- ' + filePath)
 
   const fileContent = fs.readFileSync(filePath, {
     encoding: 'utf-8'
@@ -47,5 +52,5 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
 
   const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '.html')
   fs.writeFileSync(targetPath, targetContent)
-  console.log('  - wrote file: ' + targetPath)
+  LOG('  - wrote file: ' + targetPath)
 })
