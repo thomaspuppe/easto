@@ -1,3 +1,5 @@
+console.time('Easto')
+
 const fs = require('fs')
 const marked = require('marked')
 const yaml = require('yaml-front-matter')
@@ -60,3 +62,5 @@ ncp('./templates/static', './output/static', err => {
   if (err) return console.error(err)
   LOG('copied static template files (aka assets)')
 })
+
+console.timeEnd('Easto')
