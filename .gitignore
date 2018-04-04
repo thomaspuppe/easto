@@ -57,3 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+# test folders for my blog content
+content_blog/
+templates_blog/
+output_blog
