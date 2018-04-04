@@ -57,7 +57,7 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   LOG('  - wrote file: ' + targetPath)
 })
 
-ncp('./templates/static', './output/static', err => {
+ncp(`./${TEMPLATES_DIR}/static`, `./${OUTPUT_DIR}`, err => {
   if (err) return console.error(err)
   LOG('copied static template files (aka assets)')
 })
