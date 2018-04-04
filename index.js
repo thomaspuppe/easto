@@ -48,10 +48,8 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   )
 
   for (var key in fileContentFrontmatter) {
-    targetContent = targetContent.replace(
-      '{{ META_' + key.toUpperCase() + ' }}',
-      fileContentFrontmatter[key]
-    )
+    const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
+    targetContent = targetContent.replace(re, fileContentFrontmatter[key])
   }
 
   const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '.html')
