@@ -19,6 +19,7 @@ process.argv.forEach(function(val) {
 
 const CONTENT_DIR = args.get('content') || 'content'
 const OUTPUT_DIR = args.get('output') || 'output'
+const TEMPLATES_DIR = args.get('templates') || 'templates'
 const VERBOSE = args.get('verbose')
 
 const LOG = str => {
@@ -34,7 +35,7 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   const fileContent = fs.readFileSync(filePath, {
     encoding: 'utf-8'
   })
-  const templateContent = fs.readFileSync('./templates/layout.html', {
+  const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/layout.html`, {
     encoding: 'utf-8'
   })
 
