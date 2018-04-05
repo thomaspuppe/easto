@@ -26,6 +26,9 @@ const LOG = str => {
   if (VERBOSE) console.log(str)
 }
 
+let counterDrafts = 0
+let counterPosts = 0
+
 LOG('Reading content directory')
 
 let indexContent = ''
@@ -73,7 +76,14 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   fs.writeFileSync(targetPath, targetContent)
   LOG('  - wrote file: ' + targetPath)
 
-  indexContent += teaserContent
+  // TODO: this is not about _any website_, but about _my blog_ ... decide what Easto will be!
+  // OPTIMIZE: dont replace if you dont output
+  if (fileContentFrontmatter['draft']) {
+    counterDrafts++
+  } else {
+    indexContent += teaserContent
+    counterPosts++
+  }
 })
 
 const indexTemplateContent = fs.readFileSync(`./${TEMPLATES_DIR}/layout.html`, {
@@ -93,4 +103,5 @@ ncp(`./${TEMPLATES_DIR}/static`, `./${OUTPUT_DIR}`, err => {
   LOG('copied static template files (aka assets)')
 })
 
+console.log(`Wrote ${counterPosts} posts and ${counterDrafts} drafts.`)
 console.timeEnd('Easto')
