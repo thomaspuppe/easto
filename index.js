@@ -72,7 +72,7 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
     teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
   }
 
-  const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '.html')
+  const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '')
   fs.writeFileSync(targetPath, targetContent)
   LOG('  - wrote file: ' + targetPath)
 
@@ -94,7 +94,7 @@ let indexTargetContent = indexTemplateContent.replace(
   indexContent
 )
 
-const indexTargetPath = `./${OUTPUT_DIR}/index.html`
+const indexTargetPath = `./${OUTPUT_DIR}/index`
 fs.writeFileSync(indexTargetPath, indexTargetContent)
 LOG('  - wrote file: ' + indexTargetPath)
 
