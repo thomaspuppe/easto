@@ -32,16 +32,15 @@ let counterPosts = 0
 LOG('Reading content directory')
 
 let indexContent = ''
-const indexTeaserTemplate = `<article class="teaser">
-    <div class="teaser__meta">
-        <span class="teaser__category">{{ META_TAGS }}</span>
-        <time datetime="{{ META_DATE }}">{{ META_DATELABEL }}</time>
-    </div>
-    <h2 class="teaser__title">
-        <a href="https://blog.thomaspuppe.de/{{ META_PERMALINK }}" rel="bookmark canonical">{{ META_TITLE }}</a>
-    </h2>
-    <p class="teaser__text">{{ META_DESCRIPTION }}</p>
-</article>`
+const templateForPost = fs.readFileSync(`./${TEMPLATES_DIR}/post.html`, {
+  encoding: 'utf-8'
+})
+const templateForIndexTeaser = fs.readFileSync(
+  `./${TEMPLATES_DIR}/index_teaser.html`,
+  {
+    encoding: 'utf-8'
+  }
+)
 
 fs
   .readdirSync(`./${CONTENT_DIR}`)
@@ -55,19 +54,16 @@ fs
     const fileContent = fs.readFileSync(filePath, {
       encoding: 'utf-8'
     })
-    const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/post.html`, {
-      encoding: 'utf-8'
-    })
 
     var fileContentFrontmatter = yaml.loadFront(fileContent)
 
     const fileContentHtml = marked(fileContentFrontmatter.__content)
-    let targetContent = templateContent.replace(
+    let targetContent = templateForPost.replace(
       '{{ CONTENT_BODY }}',
       fileContentHtml
     )
 
-    let teaserContent = indexTeaserTemplate
+    let teaserContent = templateForIndexTeaser
 
     LOG('  - Meta data:')
     for (var key in fileContentFrontmatter) {
