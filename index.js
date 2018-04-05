@@ -50,7 +50,7 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   const fileContent = fs.readFileSync(filePath, {
     encoding: 'utf-8'
   })
-  const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/layout.html`, {
+  const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/post.html`, {
     encoding: 'utf-8'
   })
 
@@ -86,7 +86,7 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   }
 })
 
-const indexTemplateContent = fs.readFileSync(`./${TEMPLATES_DIR}/layout.html`, {
+const indexTemplateContent = fs.readFileSync(`./${TEMPLATES_DIR}/index.html`, {
   encoding: 'utf-8'
 })
 let indexTargetContent = indexTemplateContent.replace(
