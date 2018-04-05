@@ -28,6 +28,18 @@ const LOG = str => {
 
 LOG('Reading content directory')
 
+let indexContent = ''
+const indexTeaserTemplate = `<article class="teaser">
+    <div class="teaser__meta">
+        <span class="teaser__category">{{ META_TAGS }}</span>
+        <time datetime="{{ META_DATE }}">{{ META_DATELABEL }}</time>
+    </div>
+    <h2 class="teaser__title">
+        <a href="https://blog.thomaspuppe.de/{{ META_PERMALINK }}" rel="bookmark canonical">{{ META_TITLE }}</a>
+    </h2>
+    <p class="teaser__text">{{ META_DESCRIPTION }}</p>
+</article>`
+
 fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
   const filePath = `./${CONTENT_DIR}/${filename}`
   LOG('- ' + filePath)
@@ -47,15 +59,34 @@ fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
     fileContentHtml
   )
 
+  let teaserContent = indexTeaserTemplate
+
+  LOG('  - Meta data:')
   for (var key in fileContentFrontmatter) {
+    if (key !== '__content') LOG(`    - ${key}: ${fileContentFrontmatter[key]}`)
     const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
     targetContent = targetContent.replace(re, fileContentFrontmatter[key])
+    teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
   }
 
   const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '.html')
   fs.writeFileSync(targetPath, targetContent)
   LOG('  - wrote file: ' + targetPath)
+
+  indexContent += teaserContent
 })
+
+const indexTemplateContent = fs.readFileSync(`./${TEMPLATES_DIR}/layout.html`, {
+  encoding: 'utf-8'
+})
+let indexTargetContent = indexTemplateContent.replace(
+  '{{ CONTENT_BODY }}',
+  indexContent
+)
+
+const indexTargetPath = `./${OUTPUT_DIR}/index.html`
+fs.writeFileSync(indexTargetPath, indexTargetContent)
+LOG('  - wrote file: ' + indexTargetPath)
 
 ncp(`./${TEMPLATES_DIR}/static`, `./${OUTPUT_DIR}`, err => {
   if (err) return console.error(err)
