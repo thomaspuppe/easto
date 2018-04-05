@@ -78,7 +78,9 @@ fs
       teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
     }
 
-    const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '')
+    const targetFilename =
+      fileContentFrontmatter.permalink || filename.replace('.md', '')
+    const targetPath = `./${OUTPUT_DIR}/` + targetFilename
     fs.writeFileSync(targetPath, targetContent)
     LOG('  - wrote file: ' + targetPath)
 
