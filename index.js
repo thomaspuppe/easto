@@ -43,48 +43,54 @@ const indexTeaserTemplate = `<article class="teaser">
     <p class="teaser__text">{{ META_DESCRIPTION }}</p>
 </article>`
 
-fs.readdirSync(`./${CONTENT_DIR}`).forEach(filename => {
-  const filePath = `./${CONTENT_DIR}/${filename}`
-  LOG('- ' + filePath)
-
-  const fileContent = fs.readFileSync(filePath, {
-    encoding: 'utf-8'
+fs
+  .readdirSync(`./${CONTENT_DIR}`)
+  .sort((a, b) => {
+    return b.localeCompare(a)
   })
-  const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/post.html`, {
-    encoding: 'utf-8'
+  .forEach(filename => {
+    const filePath = `./${CONTENT_DIR}/${filename}`
+    LOG('- ' + filePath)
+
+    const fileContent = fs.readFileSync(filePath, {
+      encoding: 'utf-8'
+    })
+    const templateContent = fs.readFileSync(`./${TEMPLATES_DIR}/post.html`, {
+      encoding: 'utf-8'
+    })
+
+    var fileContentFrontmatter = yaml.loadFront(fileContent)
+
+    const fileContentHtml = marked(fileContentFrontmatter.__content)
+    let targetContent = templateContent.replace(
+      '{{ CONTENT_BODY }}',
+      fileContentHtml
+    )
+
+    let teaserContent = indexTeaserTemplate
+
+    LOG('  - Meta data:')
+    for (var key in fileContentFrontmatter) {
+      if (key !== '__content')
+        LOG(`    - ${key}: ${fileContentFrontmatter[key]}`)
+      const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
+      targetContent = targetContent.replace(re, fileContentFrontmatter[key])
+      teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
+    }
+
+    const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '')
+    fs.writeFileSync(targetPath, targetContent)
+    LOG('  - wrote file: ' + targetPath)
+
+    // TODO: this is not about _any website_, but about _my blog_ ... decide what Easto will be!
+    // OPTIMIZE: dont replace if you dont output
+    if (fileContentFrontmatter['draft']) {
+      counterDrafts++
+    } else {
+      indexContent += teaserContent
+      counterPosts++
+    }
   })
-
-  var fileContentFrontmatter = yaml.loadFront(fileContent)
-
-  const fileContentHtml = marked(fileContentFrontmatter.__content)
-  let targetContent = templateContent.replace(
-    '{{ CONTENT_BODY }}',
-    fileContentHtml
-  )
-
-  let teaserContent = indexTeaserTemplate
-
-  LOG('  - Meta data:')
-  for (var key in fileContentFrontmatter) {
-    if (key !== '__content') LOG(`    - ${key}: ${fileContentFrontmatter[key]}`)
-    const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
-    targetContent = targetContent.replace(re, fileContentFrontmatter[key])
-    teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
-  }
-
-  const targetPath = `./${OUTPUT_DIR}/` + filename.replace('.md', '')
-  fs.writeFileSync(targetPath, targetContent)
-  LOG('  - wrote file: ' + targetPath)
-
-  // TODO: this is not about _any website_, but about _my blog_ ... decide what Easto will be!
-  // OPTIMIZE: dont replace if you dont output
-  if (fileContentFrontmatter['draft']) {
-    counterDrafts++
-  } else {
-    indexContent += teaserContent
-    counterPosts++
-  }
-})
 
 const indexTemplateContent = fs.readFileSync(`./${TEMPLATES_DIR}/index.html`, {
   encoding: 'utf-8'
