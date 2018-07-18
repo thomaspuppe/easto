@@ -20,6 +20,7 @@ process.argv.forEach(function(val) {
 const CONTENT_DIR = args.get('content') || 'content'
 const OUTPUT_DIR = args.get('output') || 'output'
 const TEMPLATES_DIR = args.get('templates') || 'templates'
+const DATA_DIR = args.get('data') || 'data'
 const VERBOSE = args.get('verbose')
 
 const LOG = str => {
@@ -102,9 +103,15 @@ const indexTargetPath = `./${OUTPUT_DIR}/index.html`
 fs.writeFileSync(indexTargetPath, indexTargetContent)
 LOG('  - wrote file: ' + indexTargetPath)
 
-ncp(`./${TEMPLATES_DIR}/static`, `./${OUTPUT_DIR}`, err => {
+ncp(`./${TEMPLATES_DIR}/assets`, `./${OUTPUT_DIR}/assets`, err => {
   if (err) return console.error(err)
-  LOG('copied static template files (aka assets)')
+  LOG('copied template assets')
+})
+
+// TODO: naming things
+ncp(`./${DATA_DIR}`, `./${OUTPUT_DIR}`, err => {
+  if (err) return console.error(err)
+  LOG(`copied data files (images, downloads, static content) from "./${DATA_DIR}" to "./${OUTPUT_DIR}/"`)
 })
 
 console.log(`Wrote ${counterPosts} posts and ${counterDrafts} drafts.`)
