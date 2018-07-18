@@ -98,7 +98,7 @@ let indexTargetContent = indexTemplateContent.replace(
   indexContent
 )
 
-const indexTargetPath = `./${OUTPUT_DIR}/index`
+const indexTargetPath = `./${OUTPUT_DIR}/index.html`
 fs.writeFileSync(indexTargetPath, indexTargetContent)
 LOG('  - wrote file: ' + indexTargetPath)
 
