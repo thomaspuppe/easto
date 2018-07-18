@@ -19,11 +19,7 @@ You can find a great list of simple servers at https://gist.github.com/willurd/5
 
 brew install caddy
 
-ln -s ../blog.thomaspuppe.de/output ./output_blog
-ln -s ../blog.thomaspuppe.de/content ./content_blog
-ln -s ../blog.thomaspuppe.de/themes/easto ./templates_blog
-
-rm -rf ./output_blog/* && node index.js --content=content_blog --output=output_blog --templates=templates_blog
+rm -rf ./../blog.thomaspuppe.de/output/* && node index.js --content=../blog.thomaspuppe.de/content  --data=../blog.thomaspuppe.de/static --output=../blog.thomaspuppe.de/output --templates=../blog.thomaspuppe.de/themes/easto --verbose=true
 
 
 ## Considerations
