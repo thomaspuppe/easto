@@ -18,7 +18,7 @@ process.argv.forEach(function(val) {
   }
 })
 
-const CONFIG = JSON.parse(fs.readFileSync('/var/www/blog.thomaspuppe.de/easto_config.json', 'utf8'));
+const CONFIG = JSON.parse(fs.readFileSync(args.get('config'), 'utf8'));
 
 const CONTENT_DIR = CONFIG.content_dir || 'content'
 const OUTPUT_DIR = CONFIG.output_dir || output
