@@ -20,8 +20,8 @@
     "eslint-plugin-standard": "^3.1.0"
   },
   "dependencies": {
-    "feed": "^1.1.1",
-    "marked": "^0.4.0",
+    "feed": "^2.0.1",
+    "marked": "^0.5.2",
     "ncp": "^2.0.0",
     "yaml-front-matter": "^4.0.0"
   }
