@@ -12,20 +12,12 @@
     "start": "node index.js"
   },
   "devDependencies": {
-    "clean-slate-lint": "^1.0.9",
     "eslint": "^5.1.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "husky": "^0.15.0-rc.9"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "./node_modules/.bin/clean-slate-lint",
-      "pre-rewrite": "./node_modules/.bin/clean-slate-lint"
-    }
+    "eslint-plugin-standard": "^3.1.0"
   },
   "dependencies": {
     "feed": "^1.1.1",
