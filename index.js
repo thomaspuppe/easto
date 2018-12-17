@@ -84,6 +84,7 @@ fs
     }
 
     LOG('  - Meta data:')
+
     for (var key in fileContentFrontmatter) {
       if (key !== '__content')
         LOG(`    - ${key}: ${fileContentFrontmatter[key]}`)
@@ -102,6 +103,14 @@ fs
       if ( key === 'date' ) {
         feedItem.date = fileContentFrontmatter[key];
       }
+    }
+
+    // TODO: naming things
+    // TODO: more functional programming!
+    for (var key in CONFIG) {
+      const re = new RegExp('{{ BLOGMETA_' + key.toUpperCase() + ' }}', 'g')
+      targetContent = targetContent.replace(re, CONFIG[key])
+      teaserContent = teaserContent.replace(re, CONFIG[key])
     }
 
     const targetFilename =
