@@ -119,8 +119,8 @@ fs
     fs.writeFileSync(targetPath, targetContent)
     LOG('  - wrote file: ' + targetPath)
 
-    feedItem.link = `https://blog.thomaspuppe.de/${targetFilename}`
-    feedItem.id = `https://blog.thomaspuppe.de/${targetFilename}`
+    feedItem.link = `${CONFIG.baseurl}${targetFilename}`
+    feedItem.id = `${CONFIG.baseurl}${targetFilename}`
 
     // TODO: this is not about _any website_, but about _my blog_ ... decide what Easto will be!
     // OPTIMIZE: dont replace if you dont output
