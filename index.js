@@ -31,12 +31,19 @@ const LOG = str => {
   if (VERBOSE) console.log(str)
 }
 
+const feed_config_blog = CONFIG.feed
+// TODO. kriegen wir das aus den Projekt-Metadaten?
+const feed_config_easto = {
+    'genrator': 'easto 0.6.0 (https://github.com/thomaspuppe/easto)'
+}
+let feed_config = {...feed_config_blog, ...feed_config_easto};
+
+let feed = new Feed.Feed(feed_config)
+
 let counterDrafts = 0
 let counterPosts = 0
 
 LOG('Reading content directory')
-
-let feed = new Feed(CONFIG.feed)
 
 let indexContent = ''
 const templateForPost = fs.readFileSync(`${TEMPLATES_DIR}/post.html`, {
