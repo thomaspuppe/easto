@@ -87,7 +87,7 @@ fs
 
     for (var key in fileContentFrontmatter) {
       if (key !== '__content')
-        LOG(`    - ${key}: ${fileContentFrontmatter[key]}`)
+        LOG(`    - ${key}: ${fileContentFrontmatter[key]} (${typeof(fileContentFrontmatter[key])})`)
       const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
       targetContent = targetContent.replace(re, fileContentFrontmatter[key])
       teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
