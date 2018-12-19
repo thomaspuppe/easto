@@ -90,10 +90,16 @@ fs
         LOG(`    - ${key}: ${fileContentFrontmatter[key]} (${typeof(fileContentFrontmatter[key])})`)
       const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
 
+      // TODO: this is starting to get dirty.
+      // But it is a good use case for your easto talk: problems beyond the first step.
       if ( key === 'date') {
         const dateInMysqlFormat = fileContentFrontmatter[key].toISOString().substring(0, 10)
         targetContent = targetContent.replace(re, dateInMysqlFormat)
-        teaserContent = teaserContent.replace(re, dateInMysqlFormat)        
+        teaserContent = teaserContent.replace(re, dateInMysqlFormat)
+      } else if ( key === 'tags') {
+        const tagsString = fileContentFrontmatter[key].join(', #')
+        targetContent = targetContent.replace(re, tagsString)
+        teaserContent = teaserContent.replace(re, tagsString)
       } else {
         targetContent = targetContent.replace(re, fileContentFrontmatter[key])
         teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
