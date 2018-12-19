@@ -69,7 +69,7 @@ fs
       encoding: 'utf-8'
     })
 
-    var fileContentFrontmatter = yaml.loadFront(fileContent)
+    let fileContentFrontmatter = yaml.loadFront(fileContent)
 
     const fileContentHtml = marked(fileContentFrontmatter.__content)
     let targetContent = templateForPost.replace(
@@ -89,8 +89,15 @@ fs
       if (key !== '__content')
         LOG(`    - ${key}: ${fileContentFrontmatter[key]} (${typeof(fileContentFrontmatter[key])})`)
       const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
-      targetContent = targetContent.replace(re, fileContentFrontmatter[key])
-      teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
+
+      if ( key === 'date') {
+        const dateInMysqlFormat = fileContentFrontmatter[key].toISOString().substring(0, 10)
+        targetContent = targetContent.replace(re, dateInMysqlFormat)
+        teaserContent = teaserContent.replace(re, dateInMysqlFormat)        
+      } else {
+        targetContent = targetContent.replace(re, fileContentFrontmatter[key])
+        teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
+      }
 
       if ( key === 'title' ) {
         feedItem.title = fileContentFrontmatter[key];
