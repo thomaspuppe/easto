@@ -18,6 +18,7 @@ process.argv.forEach(function(val) {
   }
 })
 
+const EASTO_META = JSON.parse(fs.readFileSync('./package.json'), 'utf8');
 const CONFIG = JSON.parse(fs.readFileSync(args.get('config'), 'utf8'));
 
 const CONTENT_DIR = CONFIG.content_dir || 'content'
@@ -32,9 +33,8 @@ const LOG = str => {
 }
 
 const feed_config_blog = CONFIG.feed
-// TODO. kriegen wir das aus den Projekt-Metadaten?
 const feed_config_easto = {
-    'genrator': 'easto 0.6.0 (https://github.com/thomaspuppe/easto)'
+    'generator': `easto ${EASTO_META.version} (https://github.com/thomaspuppe/easto)`
 }
 let feed_config = {...feed_config_blog, ...feed_config_easto};
 
