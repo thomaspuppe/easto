@@ -164,6 +164,28 @@ fs.writeFileSync(`${OUTPUT_DIR}/feed/atom`, feed.atom1())
 fs.writeFileSync(`${OUTPUT_DIR}/feed/json`, feed.json1())
 LOG('  - wrote feed files.')
 
+// TODO: wird Zeit, das in Module auszulagern
+// TODO: Feed wird das nicht können. Also XML-Lib oder selber json2xml
+/*
+let sitemap = new Feed.Feed()
+sitemap.addItem(sitemapItem)
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://blog.thomaspuppe.de/</loc>
+  <lastmod>2019-01-15T22:46:34+00:00</lastmod>
+  <priority>1.00</priority>
+</url> */
+
+
 ncp(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, err => {
   if (err) return console.error(err)
   LOG('copied template assets')
