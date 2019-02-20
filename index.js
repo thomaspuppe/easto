@@ -1,4 +1,4 @@
-console.time('Easto')
+console.time('🚀 Easto')
 
 const Feed = require('feed')
 const fs = require('fs')
@@ -129,6 +129,7 @@ fs
     const targetFilename =
       fileContentFrontmatter.permalink || filename.replace('.md', '')
     const targetPath = `${OUTPUT_DIR}/` + targetFilename
+    // OPTIMIZE: Async writing
     fs.writeFileSync(targetPath, targetContent)
     LOG('  - wrote file: ' + targetPath)
 
@@ -200,4 +201,4 @@ ncp(`${DATA_DIR}`, `${OUTPUT_DIR}`, err => {
 // TODO: langsam könnte man auch mal aufteilen :-)
 
 console.log(`Wrote ${counterPosts} posts and ${counterDrafts} drafts.`)
-console.timeEnd('Easto')
+console.timeEnd('🚀 Easto')
