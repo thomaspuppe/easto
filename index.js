@@ -32,7 +32,13 @@ const LOG = str => {
   if (VERBOSE) console.log(str)
 }
 
+const eval_template = (s, params) => {
+  return Function(...Object.keys(params), "return " + s)
+  (...Object.values(params))
+}
+
 const feed_config_blog = CONFIG.feed
+// TODO: fix version which is 2.0 in output, but 0.7 in package.json!?!
 const feed_config_easto = {
     'generator': `easto ${EASTO_META.version} (https://github.com/thomaspuppe/easto)`
 }
@@ -56,6 +62,8 @@ const templateForIndexTeaser = fs.readFileSync(
   }
 )
 
+
+
 fs
   .readdirSync(`${CONTENT_DIR}`)
   .sort((a, b) => {
@@ -72,59 +80,27 @@ fs
     let fileContentFrontmatter = yaml.loadFront(fileContent)
 
     const fileContentHtml = marked(fileContentFrontmatter.__content)
-    let targetContent = templateForPost.replace(
-      '{{ CONTENT_BODY }}',
-      fileContentHtml
-    )
-
-    let teaserContent = templateForIndexTeaser
 
     const feedItem = {
+      title: fileContentFrontmatter['title'],
+      description: fileContentFrontmatter['description'],
+      date: fileContentFrontmatter['date'],
       content: fileContentHtml
     }
 
-    LOG('  - Meta data:')
+    // TODO: naming things!
+    fileContentFrontmatter['date'] = fileContentFrontmatter['date'].toISOString().substring(0, 10)
 
-    for (var key in fileContentFrontmatter) {
-      if (key !== '__content')
-        LOG(`    - ${key}: ${fileContentFrontmatter[key]} (${typeof(fileContentFrontmatter[key])})`)
-      const re = new RegExp('{{ META_' + key.toUpperCase() + ' }}', 'g')
+    const teaserContent = eval_template(templateForIndexTeaser, {
+        'blogmeta': CONFIG,
+        'meta': fileContentFrontmatter
+    })
 
-      // TODO: this is starting to get dirty.
-      // But it is a good use case for your easto talk: problems beyond the first step.
-      if ( key === 'date') {
-        const dateInMysqlFormat = fileContentFrontmatter[key].toISOString().substring(0, 10)
-        targetContent = targetContent.replace(re, dateInMysqlFormat)
-        teaserContent = teaserContent.replace(re, dateInMysqlFormat)
-      } else if ( key === 'tags') {
-        const tagsString = fileContentFrontmatter[key].join(', #')
-        targetContent = targetContent.replace(re, tagsString)
-        teaserContent = teaserContent.replace(re, tagsString)
-      } else {
-        targetContent = targetContent.replace(re, fileContentFrontmatter[key])
-        teaserContent = teaserContent.replace(re, fileContentFrontmatter[key])
-      }
-
-      if ( key === 'title' ) {
-        feedItem.title = fileContentFrontmatter[key];
-      }
-
-      if ( key === 'description' ) {
-        feedItem.description = fileContentFrontmatter[key];
-      }
-
-      if ( key === 'date' ) {
-        feedItem.date = fileContentFrontmatter[key];
-      }
-    }
-
-    // TODO: naming things
-    // TODO: more functional programming!
-    for (var key in CONFIG) {
-      const re = new RegExp('{{ BLOGMETA_' + key.toUpperCase() + ' }}', 'g')
-      targetContent = targetContent.replace(re, CONFIG[key])
-      teaserContent = teaserContent.replace(re, CONFIG[key])
-    }
+    const targetContent = eval_template(templateForPost, {
+        'blogmeta': CONFIG,
+        'meta': fileContentFrontmatter,
+        'content': fileContentHtml
+    })
 
     const targetFilename =
       fileContentFrontmatter.permalink || filename.replace('.md', '')
@@ -150,10 +126,9 @@ fs
 const indexTemplateContent = fs.readFileSync(`${TEMPLATES_DIR}/index.html`, {
   encoding: 'utf-8'
 })
-let indexTargetContent = indexTemplateContent.replace(
-  '{{ CONTENT_BODY }}',
-  indexContent
-)
+const indexTargetContent = eval_template(indexTemplateContent, {
+    'content': indexContent
+})
 
 const indexTargetPath = `${OUTPUT_DIR}/index.html`
 fs.writeFileSync(indexTargetPath, indexTargetContent)
