@@ -52,20 +52,12 @@ let counterPosts = 0
 LOG('Reading content directory')
 
 let indexContent = ''
-const templateForPost = fs.readFileSync(`${TEMPLATES_DIR}/post.html`, {
-  encoding: 'utf-8'
-})
-const templateForIndexTeaser = fs.readFileSync(
-  `${TEMPLATES_DIR}/index_teaser.html`,
-  {
-    encoding: 'utf-8'
-  }
-)
-
+const templateForPost = fs.readFileSync(`${TEMPLATES_DIR}/post.html`, 'utf-8')
+const templateForIndexTeaser = fs.readFileSync(`${TEMPLATES_DIR}/index_teaser.html`, 'utf-8')
 
 
 fs
-  .readdirSync(`${CONTENT_DIR}`)
+  .readdirSync(CONTENT_DIR) // TODO: nur die Variable hier rein!
   .sort((a, b) => {
     return b.localeCompare(a)
   })
@@ -73,9 +65,7 @@ fs
     const filePath = `${CONTENT_DIR}/${filename}`
     LOG('- ' + filePath)
 
-    const fileContent = fs.readFileSync(filePath, {
-      encoding: 'utf-8'
-    })
+    const fileContent = fs.readFileSync(filePath, 'utf-8')
 
     let fileContentFrontmatter = yaml.loadFront(fileContent)
 
@@ -123,9 +113,7 @@ fs
     }
   })
 
-const indexTemplateContent = fs.readFileSync(`${TEMPLATES_DIR}/index.html`, {
-  encoding: 'utf-8'
-})
+const indexTemplateContent = fs.readFileSync(`${TEMPLATES_DIR}/index.html`, 'utf-8')
 const indexTargetContent = eval_template(indexTemplateContent, {
     'content': indexContent
 })
@@ -168,7 +156,7 @@ ncp(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, err => {
 })
 
 // TODO: naming things
-ncp(`${DATA_DIR}`, `${OUTPUT_DIR}`, err => {
+ncp(DATA_DIR, OUTPUT_DIR, err => {
   if (err) return console.error(err)
   LOG(`copied data files (images, downloads, static content) from "${DATA_DIR}" to "${OUTPUT_DIR}/"`)
 })
