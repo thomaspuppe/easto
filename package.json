@@ -11,11 +11,10 @@
   "scripts": {
     "start": "node index.js"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
-    "feed": "^4.1.0",
-    "marked": "^0.8.2",
+    "feed": "^4.2.1",
+    "marked": "^1.2.2",
     "ncp": "^2.0.0",
     "yaml-front-matter": "^4.1.0"
   }
