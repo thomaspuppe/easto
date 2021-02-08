@@ -14,7 +14,7 @@
   "devDependencies": {},
   "dependencies": {
     "feed": "^4.2.2",
-    "marked": "^1.2.7",
+    "marked": "^2.0.0",
     "ncp": "^2.0.0",
     "yaml-front-matter": "^4.1.1"
   }
