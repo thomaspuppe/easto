@@ -69,7 +69,7 @@ fs
 
     let fileContentFrontmatter = yaml.loadFront(fileContent)
 
-    const fileContentHtml = marked(fileContentFrontmatter.__content)
+    const fileContentHtml = marked.parse(fileContentFrontmatter.__content)
 
     const feedItem = {
       title: fileContentFrontmatter['title'],
