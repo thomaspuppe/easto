@@ -36,7 +36,7 @@ This will:
 View the result:
 
 ```bash
-cd output && caddy -port 8000
+npm run serve
 # Visit http://localhost:8000/
 ```
 
@@ -182,21 +182,27 @@ your-blog/
 
 ## Development Server
 
-After building, serve the output directory locally:
+Easto generates files without extensions (e.g., `/blog-post` instead of `/blog-post.html`).
+
+### Using the included dev server
+
+```bash
+npm run serve
+# or: node serve.js
+```
+
+This serves extensionless files with `Content-Type: text/html` and runs on http://localhost:8000/
 
 ### Using Caddy
-```bash
-cd output && caddy -port 8000
-```
 
-### Using Python
-```bash
-cd output && python -m http.server 8000
-```
+If you have Caddy installed, use this configuration:
 
-### Using Node.js
 ```bash
-npx http-server output -p 8000
+:8000 {
+	root * output
+	file_server
+	try_files {path} {path}.html {path}/index.html
+}
 ```
 
 ## How It Works
@@ -240,13 +246,14 @@ See the real-world usage in [blog.thomaspuppe.de](https://github.com/thomaspuppe
 
 ## Local Development
 
-Simple local server options:
-- [Caddy](https://caddyserver.com/): `caddy -port 8000`
-- Python: `python -m http.server 8000`
-- Node.js: `npx http-server -p 8000`
-- Ruby: `ruby -run -ehttpd . -p 8000`
+To work on easto itself:
 
-More options at: https://gist.github.com/willurd/5720255
+1. Make changes to `index.js`
+2. Build: `npm run build`
+3. Serve: `npm run serve`
+4. Test at http://localhost:8000/
+
+The included `serve.js` dev server correctly handles extensionless files that easto generates.
 
 ## License
 

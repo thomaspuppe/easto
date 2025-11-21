@@ -9,7 +9,9 @@
     "url": "git+https://github.com/thomaspuppe/easto.git"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "node index.js --config=test_config.json",
+    "serve": "node serve.js"
   },
   "devDependencies": {},
   "dependencies": {
