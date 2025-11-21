@@ -17,14 +17,14 @@
     <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
 
     <meta property="og:title" content="Example Blog Post with Full Frontmatter" />
-    <meta property="og:url" content="https://example.com/example-post-full-frontmatter" />
+    <meta property="og:url" content="http://localhost:8000/example-post-full-frontmatter" />
     <meta property="og:type" content="article" />
     <meta property="og:article:published_time" content="2024-12-15" />
     <meta property="og:article:author" content="Your Name" />
 </head>
 <body>
     <header>
-        <p><a href="https://example.com/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
+        <p><a href="http://localhost:8000/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
     </header>
     <article class="post">
 

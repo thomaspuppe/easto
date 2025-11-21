@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://example.com</id>
+    <id>http://localhost:8000</id>
     <title>My Blog Title</title>
-    <updated>2025-11-21T20:53:30.352Z</updated>
+    <updated>2025-11-21T21:07:42.763Z</updated>
     <generator>easto 0.7.3 (https://github.com/thomaspuppe/easto)</generator>
     <author>
         <name>Your Name</name>
         <email>your.email@example.com</email>
-        <uri>https://example.com</uri>
+        <uri>http://localhost:8000</uri>
     </author>
-    <link rel="alternate" href="https://example.com"/>
-    <link rel="self" href="https://example.com/feed/atom"/>
+    <link rel="alternate" href="http://localhost:8000"/>
+    <link rel="self" href="http://localhost:8000/feed/atom"/>
     <subtitle>A description of my blog</subtitle>
     <rights>All rights reserved 2024, Your Name</rights>
     <entry>
         <title type="html"><![CDATA[Example Blog Post with Full Frontmatter]]></title>
-        <id>https://example.com/example-post-full-frontmatter</id>
-        <link href="https://example.com/example-post-full-frontmatter"/>
+        <id>http://localhost:8000/example-post-full-frontmatter</id>
+        <link href="http://localhost:8000/example-post-full-frontmatter"/>
         <updated>2024-12-15T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[This is an example blog post demonstrating all the frontmatter fields that easto templates expect.]]></summary>
         <content type="html"><![CDATA[<p>This is an example blog post that demonstrates how easto processes markdown content with complete YAML frontmatter.</p>
@@ -72,8 +72,8 @@ console.log(html)
     </entry>
     <entry>
         <title type="html"><![CDATA[Markdown Features Test Page]]></title>
-        <id>https://example.com/markdown-features-test</id>
-        <link href="https://example.com/markdown-features-test"/>
+        <id>http://localhost:8000/markdown-features-test</id>
+        <link href="http://localhost:8000/markdown-features-test"/>
         <updated>2019-03-22T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[A comprehensive test of markdown rendering including headings, lists, code blocks, and more.]]></summary>
         <content type="html"><![CDATA[<h1 id="heading-1">Heading 1</h1>

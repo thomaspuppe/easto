@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>My Blog Title</title>
-        <link>https://example.com</link>
+        <link>http://localhost:8000</link>
         <description>A description of my blog</description>
-        <lastBuildDate>Fri, 21 Nov 2025 20:53:30 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 21 Nov 2025 21:07:42 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>easto 0.7.3 (https://github.com/thomaspuppe/easto)</generator>
         <copyright>All rights reserved 2024, Your Name</copyright>
-        <atom:link href="https://example.com/feed/rss" rel="self" type="application/rss+xml"/>
+        <atom:link href="http://localhost:8000/feed/rss" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Example Blog Post with Full Frontmatter]]></title>
-            <link>https://example.com/example-post-full-frontmatter</link>
-            <guid>https://example.com/example-post-full-frontmatter</guid>
+            <link>http://localhost:8000/example-post-full-frontmatter</link>
+            <guid>http://localhost:8000/example-post-full-frontmatter</guid>
             <pubDate>Sun, 15 Dec 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[This is an example blog post demonstrating all the frontmatter fields that easto templates expect.]]></description>
             <content:encoded><![CDATA[<p>This is an example blog post that demonstrates how easto processes markdown content with complete YAML frontmatter.</p>
@@ -68,8 +68,8 @@ console.log(html)
         </item>
         <item>
             <title><![CDATA[Markdown Features Test Page]]></title>
-            <link>https://example.com/markdown-features-test</link>
-            <guid>https://example.com/markdown-features-test</guid>
+            <link>http://localhost:8000/markdown-features-test</link>
+            <guid>http://localhost:8000/markdown-features-test</guid>
             <pubDate>Fri, 22 Mar 2019 00:00:00 GMT</pubDate>
             <description><![CDATA[A comprehensive test of markdown rendering including headings, lists, code blocks, and more.]]></description>
             <content:encoded><![CDATA[<h1 id="heading-1">Heading 1</h1>

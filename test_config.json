@@ -5,23 +5,23 @@
 	"data_dir": "./static",
 
 	"author": "Your Name",
-	"baseurl": "https://example.com/",
+	"baseurl": "http://localhost:8000/",
 
 	"feed": {
 		"title": "My Blog Title",
 		"description": "A description of my blog",
-		"id": "https://example.com",
-		"link": "https://example.com",
+		"id": "http://localhost:8000",
+		"link": "http://localhost:8000",
 		"copyright": "All rights reserved 2024, Your Name",
 		"feedLinks": {
-			"json": "https://example.com/feed/json",
-			"atom": "https://example.com/feed/atom",
-			"rss": "https://example.com/feed/rss"
+			"json": "http://localhost:8000/feed/json",
+			"atom": "http://localhost:8000/feed/atom",
+			"rss": "http://localhost:8000/feed/rss"
 		},
 		"author": {
 			"name": "Your Name",
 			"email": "your.email@example.com",
-			"link": "https://example.com"
+			"link": "http://localhost:8000"
 		}
 	}
 }
