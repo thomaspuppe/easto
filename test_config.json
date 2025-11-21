@@ -1,0 +1,27 @@
+{
+	"content_dir": "./content",
+	"output_dir": "./output",
+	"templates_dir": "./templates",
+	"data_dir": "./static",
+
+	"author": "Your Name",
+	"baseurl": "https://example.com/",
+
+	"feed": {
+		"title": "My Blog Title",
+		"description": "A description of my blog",
+		"id": "https://example.com",
+		"link": "https://example.com",
+		"copyright": "All rights reserved 2024, Your Name",
+		"feedLinks": {
+			"json": "https://example.com/feed/json",
+			"atom": "https://example.com/feed/atom",
+			"rss": "https://example.com/feed/rss"
+		},
+		"author": {
+			"name": "Your Name",
+			"email": "your.email@example.com",
+			"link": "https://example.com"
+		}
+	}
+}

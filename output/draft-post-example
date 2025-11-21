@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="language" content="en">
+    <title>This is a Draft Post</title>
+    <meta name="description" content="This draft post demonstrates that posts with draft:true are excluded from feeds and the index page.">
+    <meta name="date" content="2023-06-20">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
+
+    <link href="/" rel="home start" />
+    <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Atom Feed" />
+    <link href="/feed/json" type="application/json" rel="alternate" title="JSON Feed" />
+    <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
+
+    <meta property="og:title" content="This is a Draft Post" />
+    <meta property="og:url" content="https://example.com/draft-post-example" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2023-06-20" />
+    <meta property="og:article:author" content="Your Name" />
+</head>
+<body>
+    <header>
+        <p><a href="https://example.com/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
+    </header>
+    <article class="post">
+
+        <div class="post__meta">
+            <span class="post__category">#drafts, #testing</span>
+            <time datetime="2023-06-20">June 20th, 2023</time>
+        </div>
+
+        <h1 class="post__title">This is a Draft Post</h1>
+
+        <h2 id="draft-post-behavior">Draft Post Behavior</h2>
+<p>This post has <code>draft: true</code> in the frontmatter, which means:</p>
+<ul>
+<li>✅ An HTML file is still generated at <code>/output/draft-post-example</code></li>
+<li>❌ It will NOT appear in the index.html teaser list</li>
+<li>❌ It will NOT be included in RSS/Atom/JSON feeds</li>
+<li>✅ The counter will show it as a draft in the build output</li>
+</ul>
+<h2 id="when-to-use-drafts">When to Use Drafts</h2>
+<p>Use <code>draft: true</code> when:</p>
+<ul>
+<li>You&#39;re working on a post but it&#39;s not ready for publication</li>
+<li>You want to preview the HTML output locally</li>
+<li>You need the file generated but not publicly listed</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p>After building, check:</p>
+<ol>
+<li>This file exists at <code>/output/draft-post-example</code></li>
+<li>It does NOT appear in <code>/output/index.html</code></li>
+<li>It does NOT appear in <code>/output/feed/rss</code>, <code>/output/feed/atom</code>, or <code>/output/feed/json</code></li>
+<li>Build output shows: &quot;Wrote X posts and Y drafts&quot; (this increments Y)</li>
+</ol>
+
+
+    </article>
+</body>
+</html>

@@ -1,0 +1,43 @@
+`<!doctype html>
+<html lang="${ meta.language || 'de' }">
+<head>
+    <meta charset="utf-8">
+    <meta name="language" content="${ meta.language || 'de' }">
+    <title>${ meta.title }</title>
+    <meta name="description" content="${ meta.description }">
+    <meta name="date" content="${ meta.date }">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
+
+    <link href="/" rel="home start" />
+    <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Atom Feed" />
+    <link href="/feed/json" type="application/json" rel="alternate" title="JSON Feed" />
+    <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
+
+    <meta property="og:title" content="${ meta.title }" />
+    <meta property="og:url" content="${ blogmeta.baseurl }${ meta.permalink }" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="${ meta.date }" />
+    <meta property="og:article:author" content="${ blogmeta.author }" />
+</head>
+<body>
+    <header>
+        <p><a href="${ blogmeta.baseurl }" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
+    </header>
+    <article class="post">
+
+        <div class="post__meta">
+            <span class="post__category">#${ meta.tags.join(', #') }</span>
+            <time datetime="${ meta.date }">${ meta.datelabel }</time>
+        </div>
+
+        <h1 class="post__title">${ meta.title }</h1>
+
+        ${ content }
+
+    </article>
+</body>
+</html>
+`

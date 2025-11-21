@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="language" content="en">
+    <title>Example Blog Post with Full Frontmatter</title>
+    <meta name="description" content="This is an example blog post demonstrating all the frontmatter fields that easto templates expect.">
+    <meta name="date" content="2024-12-15">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
+
+    <link href="/" rel="home start" />
+    <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Atom Feed" />
+    <link href="/feed/json" type="application/json" rel="alternate" title="JSON Feed" />
+    <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
+
+    <meta property="og:title" content="Example Blog Post with Full Frontmatter" />
+    <meta property="og:url" content="https://example.com/example-post-full-frontmatter" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2024-12-15" />
+    <meta property="og:article:author" content="Your Name" />
+</head>
+<body>
+    <header>
+        <p><a href="https://example.com/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
+    </header>
+    <article class="post">
+
+        <div class="post__meta">
+            <span class="post__category">#web development, #static-site generators</span>
+            <time datetime="2024-12-15">December 15th, 2024</time>
+        </div>
+
+        <h1 class="post__title">Example Blog Post with Full Frontmatter</h1>
+
+        <p>This is an example blog post that demonstrates how easto processes markdown content with complete YAML frontmatter.</p>
+<h2 id="why-this-example-matters">Why This Example Matters</h2>
+<p>This content file includes all the frontmatter fields that the real blog templates expect:</p>
+<ul>
+<li><code>title</code>: The post title</li>
+<li><code>date</code>: Publication date in YAML date format</li>
+<li><code>datelabel</code>: Human-readable date string for display</li>
+<li><code>language</code>: Content language (en, de, etc.)</li>
+<li><code>tags</code>: Array of tags/categories</li>
+<li><code>permalink</code>: Custom URL slug</li>
+<li><code>draft</code>: Boolean to exclude from feeds and index</li>
+<li><code>description</code>: Short summary for teasers and meta tags</li>
+</ul>
+<h2 id="markdown-features">Markdown Features</h2>
+<p>You can use standard markdown features:</p>
+<p><strong>Bold text</strong> and <em>italic text</em> work as expected.</p>
+<h3 id="lists">Lists</h3>
+<p>Unordered lists:</p>
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+</ul>
+<p>Ordered lists:</p>
+<ol>
+<li>First step</li>
+<li>Second step</li>
+<li>Third step</li>
+</ol>
+<h3 id="links-and-code">Links and Code</h3>
+<p>Check out <a href="https://github.com/thomaspuppe/easto">the easto repository</a> for more information.</p>
+<p>Inline code: <code>const foo = &quot;bar&quot;</code></p>
+<p>Code blocks:</p>
+<pre><code class="language-javascript">const marked = require(&#39;marked&#39;)
+const html = marked.parse(markdown)
+console.log(html)
+</code></pre>
+<h3 id="blockquotes">Blockquotes</h3>
+<blockquote>
+<p>This is a blockquote. Easto processes these correctly using the marked library.</p>
+</blockquote>
+<h2 id="testing-feed-generation">Testing Feed Generation</h2>
+<p>Since this post has <code>draft: false</code>, it will appear in:</p>
+<ul>
+<li>The index.html teaser list</li>
+<li>RSS feed</li>
+<li>Atom feed</li>
+<li>JSON feed</li>
+</ul>
+
+
+    </article>
+</body>
+</html>

@@ -1,17 +1,43 @@
 <!doctype html>
 <html lang="de">
-    <head>
-        <meta charset="utf-8">
-        <meta name="language" content="{{ META_LANGUAGE }}">
-        <title>Willkommen | Easto static-site generator</title>
-        <meta name="description" content="Easto static-site generator">
-        <meta name="date" content="Thu Mar 22 2018 01:00:00 GMT+0100 (CET)">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="static/styles.css"/>
-    </head>
-    <body>
-        <h1>This is easto!</h1>
-        <p>Hello Easto!</p>
+<head>
+    <meta charset="utf-8">
+    <meta name="language" content="de">
+    <title>Blog von Thomas Puppe, Web Developer.</title>
+    <meta name="description" content="Easto static-site generator">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
+    <link href="/" rel="home start" />
+    <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Atom Feed" />
+    <link href="/feed/json" type="application/json" rel="alternate" title="JSON Feed" />
+    <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
+</head>
+<body>
+    <header>
+        <h1>Blog von Thomas Puppe, Web Developer.</h1>
+    </header>
+    <article class="teaser">
+    <div class="teaser__meta">
+        <span class="teaser__category">#web development, #static-site generators</span>
+        <time datetime="2024-12-15">December 15th, 2024</time>
+    </div>
+    <h2 class="teaser__title">
+        <a href="https://example.com/example-post-full-frontmatter" rel="bookmark canonical">Example Blog Post with Full Frontmatter</a>
+    </h2>
+    <p class="teaser__text">This is an example blog post demonstrating all the frontmatter fields that easto templates expect.</p>
+</article>
+<article class="teaser">
+    <div class="teaser__meta">
+        <span class="teaser__category">#markdown, #testing</span>
+        <time datetime="2019-03-22">March 22nd, 2019</time>
+    </div>
+    <h2 class="teaser__title">
+        <a href="https://example.com/markdown-features-test" rel="bookmark canonical">Markdown Features Test Page</a>
+    </h2>
+    <p class="teaser__text">A comprehensive test of markdown rendering including headings, lists, code blocks, and more.</p>
+</article>
 
-    </body>
+</body>
 </html>

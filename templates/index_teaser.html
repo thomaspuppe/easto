@@ -1,0 +1,11 @@
+`<article class="teaser">
+    <div class="teaser__meta">
+        <span class="teaser__category">#${ meta.tags.join(', #') }</span>
+        <time datetime="${ meta.date }">${ meta.datelabel }</time>
+    </div>
+    <h2 class="teaser__title">
+        <a href="${ blogmeta.baseurl }${ meta.permalink }" rel="bookmark canonical">${ meta.title }</a>
+    </h2>
+    <p class="teaser__text">${ meta.description }</p>
+</article>
+`

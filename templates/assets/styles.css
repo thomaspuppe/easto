@@ -1,0 +1,221 @@
+:root {
+	--color-background: #FFF;
+	--color-text: #292929;
+	--color-link-hover: #673AB7;
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-background: #292929;
+		--color-text: #FFF;
+		--color-link-hover: #C5A4FF;
+	}
+}
+
+@charset "UTF-8";
+@font-face {
+	font-family: "League Spartan";
+	src: url("webfonts/leaguespartan/leaguespartan-bold.woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "Sina Nova";
+	src: url("webfonts/sinanova/sinanova-regular.woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "PT Mono";
+	src: url("webfonts/ptmono/ptmono-regular.woff");
+	font-weight: normal;
+	font-style: normal;
+}
+body {
+	background-color: var(--color-background);
+	color: var(--color-text);
+	font-family: "Sina Nova", "Georgia", "Palatino", "Palatino Linotype", "OpenSerif", "FreeSerif", serif;
+}
+
+h1, h2, h3 {
+	font-family: "League Spartan", "Helvetica", "OpenSans", "FreeSans", sans-serif;
+	font-weight: 400;
+	line-height: 1.6em;
+	margin-top: 0.7em;
+	margin-bottom: 1.41667rem;
+	/* huge texts make messy screens */
+	word-wrap: break-word;
+}
+
+h1 {
+	font-size: 2.7rem;
+	font-size: clamp(2rem, 6vh, 3rem);
+	letter-spacing: 0.125rem;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-size: 1.7rem;
+	font-size: clamp(1.6rem, 4vh, 2.5rem);
+	letter-spacing: 0.08333rem;
+}
+
+h3 {
+	font-size: 1.5rem;
+	font-size: clamp(1.4rem, 3vh, 2rem);
+	letter-spacing: 0.08333rem;
+}
+
+html, body {
+	font-size: 24px;
+}
+
+.grid {
+	background-image: linear-gradient(to bottom, rgba(0, 170, 255, 0.3) 1px, transparent 1px);
+	background-position: left -1px;
+	background-repeat: repeat;
+	background-size: 34px 34px;
+}
+.grid body {
+	box-shadow: 1px 0px 0px rgba(0, 170, 255, 0.3), -1px 0px 0px rgba(0, 170, 255, 0.3);
+}
+
+body {
+	margin: 4.25rem auto;
+	padding: 0 1.25rem;
+	line-height: 1.41667rem;
+}
+
+p, ul, ol, pre, table, blockquote {
+	margin-top: 1.41667rem;
+	margin-bottom: 0;
+}
+
+header {
+	margin: 0 auto;
+	max-width: 37.5rem;
+}
+header a {
+	color: var(--color-text);
+}
+
+.teaser {
+	padding: 1.41667rem 0;
+	border-bottom: 1px #292929 solid;
+	margin: 0 auto;
+	max-width: 37.5rem;
+}
+.teaser__category:after {
+	content: " | ";
+}
+.teaser__title {
+	margin-top: 0.70833rem;
+	margin-bottom: 0.70833rem;
+}
+.teaser__text {
+	margin-top: 0.70833rem;
+}
+.teaser__title a {
+	color: var(--color-text);
+	text-decoration: none;
+}
+.teaser__title a:hover {
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.post {
+	padding: 1.41667rem 0;
+}
+.post__category:after {
+	content: " | ";
+}
+.post > * {
+	margin: 1.41667rem auto;
+	max-width: 37.5rem;
+}
+.post > h2 {
+	margin: 2.625rem auto 0.4rem;
+}
+.post > h3 {
+	margin: 1.125rem auto 0.2rem;
+}
+.post figure,
+.post pre,
+.post table {
+	margin: 2.83333rem auto;
+	max-width: 50rem;
+}
+.post figure {
+	text-align: center;
+	font-style: italic;
+	padding: 0 1.41667rem;
+}
+.post figure figcaption {
+	margin-top: 1.41667rem;
+}
+.post pre {
+	background: #34495e;
+	color: #ecf0f1;
+	font-family: "PT Mono", "Lucida Console", "Monaco", monospace;
+	font-size: smaller;
+	overflow-x: auto;
+	padding: 1.41667rem;
+}
+.post img {
+	max-width: 100%;
+}
+.post blockquote {
+	border-left: 4px #292929 solid;
+	padding-left: 1em;
+}
+.post blockquote cite:before {
+	content: "— ";
+}
+.post table {
+	overflow-x: auto;
+	width: 100%;
+}
+.post table thead td:not(:first-child) {
+	border-top: 1px solid #ecf0f1;
+	border-bottom: 1px solid #ecf0f1;
+	background-color: #34495e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#34495e), to(#455a6f));
+	background: -moz-linear-gradient(top, #34495e, #455a6f);
+	color: #ecf0f1;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+.post table td {
+	padding: 1ch;
+	text-align: center;
+}
+.post table tbody td:first-child {
+	font-weight: bold;
+}
+.post table tbody .red {
+	background-color: #F38181;
+}
+.post table tbody .green {
+	background-color: #D6F7AD;
+}
+.post a, .post a:link, .post a:visited {
+	color: var(--color-text);
+	text-underline-offset: 0.18em;
+	text-decoration-skip-ink: auto;
+	text-decoration-thickness: 2px;
+}
+.post a:hover, .post a:focus {
+	color: var(--color-link-hover);
+}
+.post code {
+	font-size: 0.8em;
+	background: #ecf0f1;
+	color: #34495e;
+	padding-left: 0.5ch;
+	padding-right: 0.5ch;
+}
+
+ins {
+	text-decoration-style: wavy;
+	text-decoration-color: #ecf0f1;
+}
