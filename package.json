@@ -11,7 +11,8 @@
   "scripts": {
     "start": "node index.js",
     "build": "node index.js --config=test_config.json",
-    "serve": "node serve.js"
+    "serve": "node serve.js",
+    "test": "./test.sh"
   },
   "devDependencies": {},
   "dependencies": {

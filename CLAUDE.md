@@ -8,6 +8,20 @@ Easto is a lightweight static-site generator written in Node.js. It converts Mar
 
 The repository includes complete test content and templates that mirror the real-world usage in [blog.thomaspuppe.de](https://github.com/thomaspuppe/blog.thomaspuppe.de).
 
+## Development Philosophy
+
+**This project values simplicity and pragmatism over complexity.**
+
+When working on easto:
+- Prefer simple, straightforward solutions over frameworks and abstractions
+- Keep the single-file architecture - don't split `index.js` into modules without good reason
+- Use bash scripts instead of test frameworks (see `test.sh` as an example)
+- Avoid adding dependencies unless absolutely necessary
+- Choose vanilla Node.js over libraries when possible
+- Keep it fast and understandable - this is a ~168 line generator, not an enterprise application
+
+The goal is to keep easto simple enough that someone can read and understand the entire codebase in 10 minutes.
+
 ## Core Architecture
 
 ### Single-file Architecture
@@ -159,6 +173,7 @@ See `test_config.json` for a complete example.
 easto/
 ├── index.js              # Main generator (single file, ~168 lines)
 ├── serve.js              # Local dev server for extensionless files
+├── test.sh               # Test script (no framework needed)
 ├── Caddyfile             # Caddy server configuration
 ├── test_config.json      # Example configuration for testing
 ├── package.json          # Dependencies and npm scripts
@@ -212,11 +227,34 @@ All file operations are currently synchronous. This is acceptable for small to m
 ### Feed Directory Creation
 The code creates `${OUTPUT_DIR}/feed/` directory without checking if it exists. This will error if the directory already exists. Always clean the output directory before running (`rm -rf ./output/*`).
 
-## Testing Your Changes
+## Testing
+
+### Automated Tests
+
+Run the test suite:
+```bash
+npm test
+# or: ./test.sh
+```
+
+The `test.sh` script is a simple bash script (no testing framework) that:
+1. Builds the site with `test_config.json`
+2. Checks all expected output files exist
+3. Verifies index has exactly 2 posts (drafts excluded)
+4. Confirms draft post HTML exists but is NOT in index or feeds
+5. Validates localhost URLs are used
+6. Starts the dev server temporarily
+7. Tests HTTP requests to index and extensionless files
+8. Validates Content-Type headers (text/html for posts, text/css for CSS)
+9. Stops the server and reports results
+
+Tests exit with code 0 on success, non-zero on failure (suitable for CI/CD).
+
+### Manual Testing
 
 1. Make changes to `index.js`
 2. Build: `npm run build`
-3. Check output in `./output/` directory
+3. Test: `npm test` (runs automated tests)
 4. Serve: `npm run serve`
 5. Visit http://localhost:8000/
 6. Test extensionless URLs (e.g., `/example-post-full-frontmatter`)

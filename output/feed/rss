@@ -4,7 +4,7 @@
         <title>My Blog Title</title>
         <link>http://localhost:8000</link>
         <description>A description of my blog</description>
-        <lastBuildDate>Fri, 21 Nov 2025 21:07:42 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 21 Nov 2025 21:12:44 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>easto 0.7.3 (https://github.com/thomaspuppe/easto)</generator>
         <copyright>All rights reserved 2024, Your Name</copyright>

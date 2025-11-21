@@ -244,14 +244,33 @@ Files are sorted reverse-alphabetically, so newer dates appear first in the inde
 
 See the real-world usage in [blog.thomaspuppe.de](https://github.com/thomaspuppe/blog.thomaspuppe.de) repository.
 
+## Testing
+
+Run the test suite:
+
+```bash
+npm test
+# or: ./test.sh
+```
+
+The test script:
+- Builds the site with test content
+- Verifies all expected files are generated
+- Checks that drafts are excluded from feeds/index
+- Tests the local server
+- Validates HTTP responses and content types
+
+No testing framework required - just a simple bash script.
+
 ## Local Development
 
 To work on easto itself:
 
 1. Make changes to `index.js`
 2. Build: `npm run build`
-3. Serve: `npm run serve`
-4. Test at http://localhost:8000/
+3. Test: `npm test`
+4. Serve: `npm run serve`
+5. Visit http://localhost:8000/
 
 The included `serve.js` dev server correctly handles extensionless files that easto generates.
 
