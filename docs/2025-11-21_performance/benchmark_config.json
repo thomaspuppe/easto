@@ -1,0 +1,25 @@
+{
+  "content_dir": "./docs/2025-11-21_performance/benchmark_content",
+  "output_dir": "./docs/2025-11-21_performance/benchmark_output",
+  "templates_dir": "./templates",
+  "data_dir": "./static",
+  "author": "Benchmark Test",
+  "baseurl": "http://localhost:8000/",
+  "feed": {
+    "title": "Benchmark Blog",
+    "description": "Performance testing blog with 150 posts",
+    "id": "http://localhost:8000/",
+    "link": "http://localhost:8000/",
+    "copyright": "Test",
+    "feedLinks": {
+      "rss": "http://localhost:8000/feed/rss",
+      "atom": "http://localhost:8000/feed/atom",
+      "json": "http://localhost:8000/feed/json"
+    },
+    "author": {
+      "name": "Benchmark Test",
+      "email": "test@example.com",
+      "link": "http://localhost:8000/"
+    }
+  }
+}

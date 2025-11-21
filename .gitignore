@@ -61,3 +61,7 @@ typings/
 content_blog/
 templates_blog/
 output_blog
+
+# test folders for performance benchmark
+
+docs/2025-11-21_performance/benchmark_content/
