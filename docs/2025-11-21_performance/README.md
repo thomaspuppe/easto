@@ -70,16 +70,24 @@ for i in {1..5}; do
 done
 ```
 
-### Expected Results
+### Expected vs Actual Results
 
-**Before optimization (current):**
-- 150 posts: ~400-600ms
+**Expected (from analysis):**
+- Before optimization: ~65ms (3 posts: ~33ms)
+- After async I/O optimization: ~45-52ms (20-30% faster)
+- After all optimizations: ~39-46ms (30-40% faster)
 
-**After async I/O optimization:**
-- 150 posts: ~80-150ms (4-5x faster)
+**Actual Results:**
+- Before optimization: 65ms (3 posts: 33ms)
+- After template caching: 63ms (3% faster)
+- After async I/O: 67ms (3% slower due to async overhead)
+- After all optimizations: 66ms (essentially unchanged)
 
-**After all optimizations:**
-- 150 posts: ~60-100ms (5-8x faster)
+**Key Finding:** The original implementation was already highly optimized. Modern SSDs and Node.js make synchronous I/O extremely fast for small files. The async overhead slightly outweighs parallelization benefits at this scale.
+
+**However:** The optimizations are still valuable for code quality, best practices, and scalability to 500+ posts or slower storage.
+
+See `optimization-results.md` for complete analysis.
 
 ## Regenerating Benchmark Posts
 
