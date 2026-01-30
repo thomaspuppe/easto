@@ -32,9 +32,12 @@ The entire generator is contained in `index.js` (approximately 168 lines). This 
 2. **Read Configuration**: Loads config from JSON file specified via `--config` arg
 3. **Process Content**: Reads markdown files from content directory, sorted reverse-alphabetically by filename (newest first)
 4. **Extract Frontmatter**: Uses `yaml-front-matter` to parse YAML metadata from markdown files
-5. **Convert Markdown**: Uses `marked` library to convert markdown to HTML
+5. **Convert Markdown**: Uses `marked` library to convert markdown to HTML (with `marked-gfm-heading-id` extension for heading IDs)
 6. **Apply Templates**: Uses template evaluation via `Function()` constructor to inject content into templates
 7. **Generate Feeds**: Creates RSS, Atom, and JSON feeds using the `feed` library
+   - **Important**: Feed timestamps (`lastBuildDate` in RSS, `updated` in Atom) are set to the date of the most recent published post, not the current build time
+   - This prevents unnecessary feed updates when rebuilding without new content
+   - Only non-draft posts are considered when determining the most recent date
 8. **Copy Assets**: Uses `ncp` to copy template assets and static files to output directory
 
 ### Template System
@@ -243,10 +246,15 @@ The `test.sh` script is a simple bash script (no testing framework) that:
 3. Verifies index has exactly 2 posts (drafts excluded)
 4. Confirms draft post HTML exists but is NOT in index or feeds
 5. Validates localhost URLs are used
-6. Starts the dev server temporarily
-7. Tests HTTP requests to index and extensionless files
-8. Validates Content-Type headers (text/html for posts, text/css for CSS)
-9. Stops the server and reports results
+6. Verifies headline IDs are generated correctly (tests `marked-gfm-heading-id` extension)
+   - Checks both h2 and h3 elements have proper `id` attributes
+7. Verifies feed timestamps match most recent post date (not current build time)
+   - Tests RSS `lastBuildDate` and Atom `updated` fields
+   - Ensures feeds don't change when rebuilding without new content
+8. Starts the dev server temporarily
+9. Tests HTTP requests to index and extensionless files
+10. Validates Content-Type headers (text/html for posts, text/css for CSS)
+11. Stops the server and reports results
 
 Tests exit with code 0 on success, non-zero on failure (suitable for CI/CD).
 
