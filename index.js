@@ -3,8 +3,12 @@ console.time('🚀 Easto')
 const Feed = require('feed')
 const fs = require('fs')
 const marked = require('marked')
+const { gfmHeadingId } = require('marked-gfm-heading-id')
 const yaml = require('yaml-front-matter')
 const ncp = require('ncp').ncp
+
+// Enable GitHub-style heading IDs
+marked.use(gfmHeadingId())
 
 // TODO: Optimize this! Wozu hamma denn deconstruction, map, usw?
 let args = new Map()

@@ -66,6 +66,17 @@ if ! grep -q "http://localhost:8000" output/index.html; then
 fi
 echo "   ✅ URLs point to localhost"
 
+# Check that headline IDs are generated (marked-gfm-heading-id)
+if ! grep -q '<h2 id="why-this-example-matters">' output/example-post-full-frontmatter; then
+    echo "❌ Headline IDs not generated correctly (missing id attribute)"
+    exit 1
+fi
+if ! grep -q '<h3 id="lists">' output/example-post-full-frontmatter; then
+    echo "❌ Headline IDs not generated for h3 elements"
+    exit 1
+fi
+echo "   ✅ Headline IDs generated correctly"
+
 # Test serving
 echo "4️⃣  Testing local server..."
 
