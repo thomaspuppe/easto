@@ -22,10 +22,106 @@ When working on easto:
 
 The goal is to keep easto simple enough that someone can read and understand the entire codebase in 10 minutes.
 
+## Development Log (Devlog)
+
+**For major changes to easto, maintain a dated devlog in the `docs/` directory.**
+
+When implementing significant changes (architecture changes, dependency updates, breaking changes, major features), create a dated directory and document:
+
+1. **Plan**: Create a `plan.md` file outlining:
+   - What problem you're solving
+   - Research findings
+   - Proposed approach with alternatives considered
+   - Implementation steps
+   - Why this approach was chosen
+
+2. **Completion**: Create a `completed.md` file documenting:
+   - What was actually done
+   - Code changes made
+   - Test results
+   - Breaking changes (if any)
+   - Migration path for users
+
+### Directory Structure
+
+```
+docs/
+└── YYYY-MM-DD_brief-description/
+    ├── plan.md
+    ├── completed.md
+    └── [any supporting files]
+```
+
+### Example
+
+See `docs/2026-01-30_commonjs-to-esm/` for a complete example of the ESM migration that updated easto from CommonJS to ES Modules.
+
+### When to Create a Devlog
+
+Create a devlog for changes that:
+- Modify core architecture or behavior
+- Update major dependencies (especially breaking changes)
+- Introduce breaking changes for users
+- Add significant new features
+- Require migration steps for existing users
+
+Don't create devlogs for:
+- Bug fixes
+- Documentation updates
+- Minor dependency patches
+- Code style changes
+
+This practice helps future maintainers (including future Claude instances) understand the evolution of the project and the reasoning behind major decisions.
+
+## Versioning
+
+**Update the version number in `package.json` to reflect the scope of changes.**
+
+Easto is not published to npm for external users, but version numbers help track the evolution of the project. Follow semantic versioning loosely:
+
+### Version Bump Guidelines
+
+**Major version (x.0.0)** - Breaking changes:
+- Changes that break compatibility with existing usage
+- Require migration steps for users (e.g., CommonJS → ESM)
+- Architectural changes that affect how easto is used as a dependency
+- Example: `0.7.3` → `0.8.0` (ESM migration)
+
+**Minor version (0.x.0)** - New features or significant improvements:
+- New functionality added (new features, options, or capabilities)
+- Significant dependency updates that add capabilities
+- Non-breaking improvements to existing features
+- Example: Adding sitemap generation, new template variables
+
+**Patch version (0.0.x)** - Bug fixes and small improvements:
+- Bug fixes that don't change behavior
+- Documentation updates
+- Performance improvements
+- Minor dependency updates (security patches, bug fixes)
+- Code refactoring without behavior changes
+
+### When to Update
+
+- Update the version **before creating a devlog** for major/minor changes
+- Update in the same commit as the changes, or as the final step
+- Include the version change in the devlog's `completed.md` file
+
+### Current Version
+
+Check `package.json` for the current version. As of the ESM migration (2026-01-30), easto is at version `0.8.0`.
+
 ## Core Architecture
 
 ### Single-file Architecture
 The entire generator is contained in `index.js` (approximately 168 lines). This is intentional for simplicity, though TODOs indicate potential future modularization.
+
+### ES Modules (ESM)
+Easto uses ES Modules (ESM) with `"type": "module"` in package.json. All imports use ESM syntax (`import` instead of `require`). This is the modern Node.js standard and required for compatibility with newer versions of dependencies like `feed@^5.x` and `marked@^17.x`.
+
+**Breaking change**: Projects using easto v0.7.x (CommonJS) will need to either:
+- Convert to ESM themselves
+- Use dynamic `import()` to load easto
+- Stay on easto v0.7.3
 
 ### Processing Pipeline
 1. **Parse Arguments**: Command-line args are parsed manually into a Map (format: `--key=value`)
@@ -197,10 +293,13 @@ easto/
 
 ## Key Dependencies
 
-- `marked@^4.1.0`: Markdown to HTML conversion
-- `yaml-front-matter@^4.1.1`: Parse YAML frontmatter from markdown
-- `feed@^4.2.2`: Generate RSS/Atom/JSON feeds
-- `ncp@^2.0.0`: Recursive file copying
+- `marked@^17.0.1`: Markdown to HTML conversion (ESM)
+- `marked-gfm-heading-id@^4.1.3`: Generate GitHub-style heading IDs (ESM)
+- `yaml-front-matter@^4.1.1`: Parse YAML frontmatter from markdown (CommonJS, compatible with ESM)
+- `feed@^5.2.0`: Generate RSS/Atom/JSON feeds (ESM)
+- `ncp@^2.0.0`: Recursive file copying (CommonJS, compatible with ESM)
+
+**Note**: Easto is an ESM (ES Modules) package as of v0.8.0. The package.json includes `"type": "module"`. This is a breaking change from v0.7.x which used CommonJS.
 
 No build tools, transpilers, or bundlers required - just Node.js and npm.
 

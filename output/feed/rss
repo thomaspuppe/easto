@@ -6,13 +6,13 @@
         <description>A description of my blog</description>
         <lastBuildDate>Sun, 15 Dec 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
-        <generator>easto 0.7.3 (https://github.com/thomaspuppe/easto)</generator>
+        <generator>easto 0.8.0 (https://github.com/thomaspuppe/easto)</generator>
         <copyright>All rights reserved 2024, Your Name</copyright>
         <atom:link href="http://localhost:8000/feed/rss" rel="self" type="application/rss+xml"/>
         <item>
             <title><![CDATA[Example Blog Post with Full Frontmatter]]></title>
             <link>http://localhost:8000/example-post-full-frontmatter</link>
-            <guid>http://localhost:8000/example-post-full-frontmatter</guid>
+            <guid isPermaLink="false">http://localhost:8000/example-post-full-frontmatter</guid>
             <pubDate>Sun, 15 Dec 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[This is an example blog post demonstrating all the frontmatter fields that easto templates expect.]]></description>
             <content:encoded><![CDATA[<p>This is an example blog post that demonstrates how easto processes markdown content with complete YAML frontmatter.</p>
@@ -69,7 +69,7 @@ console.log(html)
         <item>
             <title><![CDATA[Markdown Features Test Page]]></title>
             <link>http://localhost:8000/markdown-features-test</link>
-            <guid>http://localhost:8000/markdown-features-test</guid>
+            <guid isPermaLink="false">http://localhost:8000/markdown-features-test</guid>
             <pubDate>Fri, 22 Mar 2019 00:00:00 GMT</pubDate>
             <description><![CDATA[A comprehensive test of markdown rendering including headings, lists, code blocks, and more.]]></description>
             <content:encoded><![CDATA[<h1 id="heading-1">Heading 1</h1>

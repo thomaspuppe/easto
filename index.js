@@ -1,11 +1,11 @@
 console.time('🚀 Easto')
 
-const Feed = require('feed')
-const fs = require('fs')
-const marked = require('marked')
-const { gfmHeadingId } = require('marked-gfm-heading-id')
-const yaml = require('yaml-front-matter')
-const ncp = require('ncp').ncp
+import { Feed } from 'feed'
+import fs from 'fs'
+import { marked } from 'marked'
+import { gfmHeadingId } from 'marked-gfm-heading-id'
+import yaml from 'yaml-front-matter'
+import ncp from 'ncp'
 
 // Enable GitHub-style heading IDs
 marked.use(gfmHeadingId())
@@ -48,7 +48,7 @@ const feed_config_easto = {
 }
 let feed_config = {...feed_config_blog, ...feed_config_easto};
 
-let feed = new Feed.Feed(feed_config)
+let feed = new Feed(feed_config)
 
 let counterDrafts = 0
 let counterPosts = 0
@@ -165,13 +165,13 @@ sitemap.addItem(sitemapItem)
 </url> */
 
 
-ncp(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, err => {
+ncp.ncp(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, err => {
   if (err) return console.error(err)
   LOG('copied template assets')
 })
 
 // TODO: naming things
-ncp(DATA_DIR, OUTPUT_DIR, err => {
+ncp.ncp(DATA_DIR, OUTPUT_DIR, err => {
   if (err) return console.error(err)
   LOG(`copied data files (images, downloads, static content) from "${DATA_DIR}" to "${OUTPUT_DIR}/"`)
 })

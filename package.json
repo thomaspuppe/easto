@@ -1,6 +1,7 @@
 {
   "name": "easto",
-  "version": "0.7.3",
+  "version": "0.8.0",
+  "type": "module",
   "main": "index.js",
   "author": "Thomas Puppe <info@thomaspuppe.de>",
   "license": "MIT",
@@ -15,7 +16,7 @@
     "test": "./test.sh"
   },
   "dependencies": {
-    "feed": "^4.2.2",
+    "feed": "^5.2.0",
     "marked": "^17.0.1",
     "marked-gfm-heading-id": "^4.1.3",
     "ncp": "^2.0.0",

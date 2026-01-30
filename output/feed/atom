@@ -3,7 +3,7 @@
     <id>http://localhost:8000</id>
     <title>My Blog Title</title>
     <updated>2024-12-15T00:00:00.000Z</updated>
-    <generator>easto 0.7.3 (https://github.com/thomaspuppe/easto)</generator>
+    <generator>easto 0.8.0 (https://github.com/thomaspuppe/easto)</generator>
     <author>
         <name>Your Name</name>
         <email>your.email@example.com</email>
