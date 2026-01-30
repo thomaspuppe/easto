@@ -77,6 +77,18 @@ if ! grep -q '<h3 id="lists">' output/example-post-full-frontmatter; then
 fi
 echo "   ✅ Headline IDs generated correctly"
 
+# Check that feed timestamps match most recent post date (not current build time)
+# Most recent post is 2024-12-15, so feeds should have that date
+if ! grep -q '<lastBuildDate>Sun, 15 Dec 2024 00:00:00 GMT</lastBuildDate>' output/feed/rss; then
+    echo "❌ RSS feed lastBuildDate should match most recent post date (2024-12-15)"
+    exit 1
+fi
+if ! grep -q '<updated>2024-12-15T00:00:00.000Z</updated>' output/feed/atom; then
+    echo "❌ Atom feed updated should match most recent post date (2024-12-15)"
+    exit 1
+fi
+echo "   ✅ Feed timestamps match most recent post"
+
 # Test serving
 echo "4️⃣  Testing local server..."
 

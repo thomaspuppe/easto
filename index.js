@@ -52,6 +52,7 @@ let feed = new Feed.Feed(feed_config)
 
 let counterDrafts = 0
 let counterPosts = 0
+let mostRecentPostDate = null
 
 LOG('Reading content directory')
 
@@ -114,8 +115,18 @@ fs
       feed.addItem(feedItem)
       indexContent += teaserContent
       counterPosts++
+
+      // Track most recent post date for feed timestamp
+      if (!mostRecentPostDate || feedItem.date > mostRecentPostDate) {
+        mostRecentPostDate = feedItem.date
+      }
     }
   })
+
+// Set feed timestamp to most recent post date instead of current time
+if (mostRecentPostDate) {
+  feed.options.updated = mostRecentPostDate
+}
 
 const indexTemplateContent = fs.readFileSync(`${TEMPLATES_DIR}/index.html`, 'utf-8')
 const indexTargetContent = eval_template(indexTemplateContent, {
