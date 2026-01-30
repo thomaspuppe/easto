@@ -12,12 +12,12 @@ marked.use(gfmHeadingId())
 
 // TODO: Optimize this! Wozu hamma denn deconstruction, map, usw?
 let args = new Map()
-process.argv.forEach(function(val) {
+process.argv.forEach(val => {
   if (val.startsWith('--')) {
     val = val.slice(2)
-    if (val.indexOf('=') > -1) {
-      const valArray = val.split('=')
-      args.set(valArray[0], valArray[1])
+    if (val.includes('=')) {
+      const [key, value] = val.split('=')
+      args.set(key, value)
     }
   }
 })
@@ -26,7 +26,7 @@ const EASTO_META = JSON.parse(fs.readFileSync('./package.json'), 'utf8');
 const CONFIG = JSON.parse(fs.readFileSync(args.get('config'), 'utf8'));
 
 const CONTENT_DIR = CONFIG.content_dir || 'content'
-const OUTPUT_DIR = CONFIG.output_dir || output
+const OUTPUT_DIR = CONFIG.output_dir || 'output'
 const TEMPLATES_DIR = CONFIG.templates_dir || 'templates'
 const DATA_DIR = CONFIG.data_dir || 'data'
 
@@ -44,7 +44,7 @@ const eval_template = (s, params) => {
 const feed_config_blog = CONFIG.feed
 // TODO: fix version which is 2.0 in output, but 0.7 in package.json!?!
 const feed_config_easto = {
-    'generator': `easto ${EASTO_META.version} (https://github.com/thomaspuppe/easto)`
+    generator: `easto ${EASTO_META.version} (https://github.com/thomaspuppe/easto)`
 }
 let feed_config = {...feed_config_blog, ...feed_config_easto};
 
@@ -63,12 +63,10 @@ const templateForIndexTeaser = fs.readFileSync(`${TEMPLATES_DIR}/index_teaser.ht
 
 fs
   .readdirSync(CONTENT_DIR) // TODO: nur die Variable hier rein!
-  .sort((a, b) => {
-    return b.localeCompare(a)
-  })
+  .sort((a, b) => b.localeCompare(a))
   .forEach(filename => {
     const filePath = `${CONTENT_DIR}/${filename}`
-    LOG('- ' + filePath)
+    LOG(`- ${filePath}`)
 
     const fileContent = fs.readFileSync(filePath, 'utf-8')
 
@@ -77,39 +75,39 @@ fs
     const fileContentHtml = marked.parse(fileContentFrontmatter.__content)
 
     const feedItem = {
-      title: fileContentFrontmatter['title'],
-      description: fileContentFrontmatter['description'],
-      date: fileContentFrontmatter['date'],
+      title: fileContentFrontmatter.title,
+      description: fileContentFrontmatter.description,
+      date: fileContentFrontmatter.date,
       content: fileContentHtml
     }
 
     // TODO: naming things!
-    fileContentFrontmatter['date'] = fileContentFrontmatter['date'].toISOString().substring(0, 10)
+    fileContentFrontmatter.date = fileContentFrontmatter.date.toISOString().slice(0, 10)
 
     const teaserContent = eval_template(templateForIndexTeaser, {
-        'blogmeta': CONFIG,
-        'meta': fileContentFrontmatter
+        blogmeta: CONFIG,
+        meta: fileContentFrontmatter
     })
 
     const targetContent = eval_template(templateForPost, {
-        'blogmeta': CONFIG,
-        'meta': fileContentFrontmatter,
-        'content': fileContentHtml
+        blogmeta: CONFIG,
+        meta: fileContentFrontmatter,
+        content: fileContentHtml
     })
 
     const targetFilename =
       fileContentFrontmatter.permalink || filename.replace('.md', '')
-    const targetPath = `${OUTPUT_DIR}/` + targetFilename
+    const targetPath = `${OUTPUT_DIR}/${targetFilename}`
     // OPTIMIZE: Async writing
     fs.writeFileSync(targetPath, targetContent)
-    LOG('  - wrote file: ' + targetPath)
+    LOG(`  - wrote file: ${targetPath}`)
 
     feedItem.link = `${CONFIG.baseurl}${targetFilename}`
     feedItem.id = `${CONFIG.baseurl}${targetFilename}`
 
     // TODO: this is not about _any website_, but about _my blog_ ... decide what Easto will be!
     // OPTIMIZE: dont replace if you dont output
-    if (fileContentFrontmatter['draft']) {
+    if (fileContentFrontmatter.draft) {
       counterDrafts++
     } else {
       feed.addItem(feedItem)
@@ -130,14 +128,14 @@ if (mostRecentPostDate) {
 
 const indexTemplateContent = fs.readFileSync(`${TEMPLATES_DIR}/index.html`, 'utf-8')
 const indexTargetContent = eval_template(indexTemplateContent, {
-    'content': indexContent
+    content: indexContent
 })
 
 const indexTargetPath = `${OUTPUT_DIR}/index.html`
 fs.writeFileSync(indexTargetPath, indexTargetContent)
-LOG('  - wrote file: ' + indexTargetPath)
+LOG(`  - wrote file: ${indexTargetPath}`)
 
-fs.mkdirSync(`${OUTPUT_DIR}/feed`) // TODO: was wenn das schon existiert?
+fs.mkdirSync(`${OUTPUT_DIR}/feed`, { recursive: true })
 fs.writeFileSync(`${OUTPUT_DIR}/feed/rss`, feed.rss2())
 fs.writeFileSync(`${OUTPUT_DIR}/feed/atom`, feed.atom1())
 fs.writeFileSync(`${OUTPUT_DIR}/feed/json`, feed.json1())

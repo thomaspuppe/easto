@@ -108,7 +108,7 @@ Easto is not published to npm for external users, but version numbers help track
 
 ### Current Version
 
-Check `package.json` for the current version. As of the ESM migration (2026-01-30), easto is at version `0.8.0`.
+Check `package.json` for the current version. As of 2026-01-30, easto is at version `0.8.1`.
 
 ## Core Architecture
 

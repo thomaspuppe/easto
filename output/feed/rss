@@ -6,7 +6,7 @@
         <description>A description of my blog</description>
         <lastBuildDate>Sun, 15 Dec 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
-        <generator>easto 0.8.0 (https://github.com/thomaspuppe/easto)</generator>
+        <generator>easto 0.8.1 (https://github.com/thomaspuppe/easto)</generator>
         <copyright>All rights reserved 2024, Your Name</copyright>
         <atom:link href="http://localhost:8000/feed/rss" rel="self" type="application/rss+xml"/>
         <item>
