@@ -4,11 +4,41 @@
         <title>My Blog Title</title>
         <link>http://localhost:8000</link>
         <description>A description of my blog</description>
-        <lastBuildDate>Sun, 15 Dec 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 15 Jan 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
-        <generator>easto 0.8.2 (https://github.com/thomaspuppe/easto)</generator>
+        <generator>easto 0.8.3 (https://github.com/thomaspuppe/easto)</generator>
         <copyright>All rights reserved 2024, Your Name</copyright>
         <atom:link href="http://localhost:8000/feed/rss" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Frontmatter Edge Cases Test]]></title>
+            <link>http://localhost:8000/frontmatter-edge-cases</link>
+            <guid isPermaLink="false">http://localhost:8000/frontmatter-edge-cases</guid>
+            <pubDate>Wed, 15 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[This post tests edge cases in frontmatter parsing including special characters, quotes, and colons.]]></description>
+            <content:encoded><![CDATA[<h1 id="frontmatter-edge-cases-test">Frontmatter Edge Cases Test</h1>
+<p>This post tests various edge cases that a custom frontmatter parser needs to handle:</p>
+<h2 id="special-characters-in-strings">Special Characters in Strings</h2>
+<p>The frontmatter includes:</p>
+<ul>
+<li><strong>Quotes in strings</strong>: <code>special_chars: String with &quot;quotes&quot; and &#39;apostrophes&#39;</code></li>
+<li><strong>Colons in values</strong>: <code>url_with_colon: https://example.com:8080/path</code></li>
+<li><strong>Multi-word array items</strong>: <code>multiword_tag: [web development, static-site generators, unit testing]</code></li>
+</ul>
+<h2 id="date-parsing">Date Parsing</h2>
+<p>The <code>date: 2025-01-15</code> should be parsed as a Date object.</p>
+<h2 id="boolean-values">Boolean Values</h2>
+<p>The <code>draft: false</code> should be parsed as boolean <code>false</code>, not the string <code>&quot;false&quot;</code>.</p>
+<h2 id="why-these-tests-matter">Why These Tests Matter</h2>
+<p>A custom frontmatter parser needs to handle:</p>
+<ol>
+<li>Quoted strings with special characters</li>
+<li>Unquoted strings containing colons (like URLs)</li>
+<li>Arrays with items containing spaces</li>
+<li>Proper type conversion (dates, booleans)</li>
+</ol>
+<p>If this post renders correctly and appears in the index/feeds, the parser is working!</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Example Blog Post with Full Frontmatter]]></title>
             <link>http://localhost:8000/example-post-full-frontmatter</link>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="language" content="en">
+    <title>Frontmatter Edge Cases Test</title>
+    <meta name="description" content="This post tests edge cases in frontmatter parsing including special characters, quotes, and colons.">
+    <meta name="date" content="2025-01-15">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/styles.css"/>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
+	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
+
+    <link href="/" rel="home start" />
+    <link href="/feed/atom" type="application/atom+xml" rel="alternate" title="Atom Feed" />
+    <link href="/feed/json" type="application/json" rel="alternate" title="JSON Feed" />
+    <link href="/feed/rss" type="application/rss+xml" rel="alternate" title="RSS Feed" />
+
+    <meta property="og:title" content="Frontmatter Edge Cases Test" />
+    <meta property="og:url" content="http://localhost:8000/frontmatter-edge-cases" />
+    <meta property="og:type" content="article" />
+    <meta property="og:article:published_time" content="2025-01-15" />
+    <meta property="og:article:author" content="Your Name" />
+</head>
+<body>
+    <header>
+        <p><a href="http://localhost:8000/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
+    </header>
+    <article class="post">
+
+        <div class="post__meta">
+            <span class="post__category">#testing, #edge-cases, #yaml</span>
+            <time datetime="2025-01-15">January 15th, 2025</time>
+        </div>
+
+        <h1 class="post__title">Frontmatter Edge Cases Test</h1>
+
+        <h1 id="frontmatter-edge-cases-test">Frontmatter Edge Cases Test</h1>
+<p>This post tests various edge cases that a custom frontmatter parser needs to handle:</p>
+<h2 id="special-characters-in-strings">Special Characters in Strings</h2>
+<p>The frontmatter includes:</p>
+<ul>
+<li><strong>Quotes in strings</strong>: <code>special_chars: String with &quot;quotes&quot; and &#39;apostrophes&#39;</code></li>
+<li><strong>Colons in values</strong>: <code>url_with_colon: https://example.com:8080/path</code></li>
+<li><strong>Multi-word array items</strong>: <code>multiword_tag: [web development, static-site generators, unit testing]</code></li>
+</ul>
+<h2 id="date-parsing">Date Parsing</h2>
+<p>The <code>date: 2025-01-15</code> should be parsed as a Date object.</p>
+<h2 id="boolean-values">Boolean Values</h2>
+<p>The <code>draft: false</code> should be parsed as boolean <code>false</code>, not the string <code>&quot;false&quot;</code>.</p>
+<h2 id="why-these-tests-matter">Why These Tests Matter</h2>
+<p>A custom frontmatter parser needs to handle:</p>
+<ol>
+<li>Quoted strings with special characters</li>
+<li>Unquoted strings containing colons (like URLs)</li>
+<li>Arrays with items containing spaces</li>
+<li>Proper type conversion (dates, booleans)</li>
+</ol>
+<p>If this post renders correctly and appears in the index/feeds, the parser is working!</p>
+
+
+    </article>
+</body>
+</html>

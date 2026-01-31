@@ -127,14 +127,14 @@ Easto uses ES Modules (ESM) with `"type": "module"` in package.json. All imports
 1. **Parse Arguments**: Command-line args are parsed manually into a Map (format: `--key=value`)
 2. **Read Configuration**: Loads config from JSON file specified via `--config` arg
 3. **Process Content**: Reads markdown files from content directory, sorted reverse-alphabetically by filename (newest first)
-4. **Extract Frontmatter**: Uses `yaml-front-matter` to parse YAML metadata from markdown files
+4. **Extract Frontmatter**: Uses custom `parseFrontmatter()` utility function (index.js:43-95) to parse YAML metadata from markdown files
 5. **Convert Markdown**: Uses `marked` library to convert markdown to HTML (with `marked-gfm-heading-id` extension for heading IDs)
 6. **Apply Templates**: Uses template evaluation via `Function()` constructor to inject content into templates
 7. **Generate Feeds**: Creates RSS, Atom, and JSON feeds using the `feed` library
    - **Important**: Feed timestamps (`lastBuildDate` in RSS, `updated` in Atom) are set to the date of the most recent published post, not the current build time
    - This prevents unnecessary feed updates when rebuilding without new content
    - Only non-draft posts are considered when determining the most recent date
-8. **Copy Assets**: Uses `ncp` to copy template assets and static files to output directory
+8. **Copy Assets**: Uses native `fs.cpSync()` to copy template assets and static files to output directory
 
 ### Template System
 Templates use a custom evaluation system (`eval_template` function at index.js:35-38) that creates a new Function with parameters and evaluates template strings as JavaScript template literals.
@@ -156,6 +156,39 @@ Template syntax example:
 <time datetime="${ meta.date }">${ meta.datelabel }</time>
 ${ content }`
 ```
+
+### Frontmatter Parser
+
+Easto uses a custom `parseFrontmatter()` function (index.js:43-95) instead of external YAML libraries. This lightweight parser (~52 lines) handles all frontmatter needs with zero dependencies.
+
+**Supported YAML features:**
+- **Strings**: Quoted (`"value"` or `'value'`) and unquoted (`value`)
+- **Dates**: YYYY-MM-DD format (e.g., `2024-12-15`) → converted to Date objects
+- **Booleans**: `true` or `false` → converted to boolean
+- **Arrays**: Inline format `[item1, item2, item3]` → converted to string array
+- **Empty arrays**: `[]` → empty array
+- **Special characters**: Supported in quoted strings (quotes, colons, etc.)
+- **Comments**: Lines starting with `#` are skipped
+- **Empty values**: `key:` → empty string
+
+**Not supported** (intentionally, as easto doesn't need them):
+- Multi-line strings (YAML `|` or `>` syntax)
+- Nested objects or complex data structures
+- Advanced YAML 1.2 features
+
+**Examples:**
+```yaml
+title: Simple String
+title: "String with: colon"
+url: https://example.com:8080/path
+date: 2024-12-15
+draft: false
+tags: [web development, javascript]
+empty: []
+special: "It's \"great\""
+```
+
+See test files `content/2025-01_frontmatter-edge-cases.md` and `content/2025-02_quotes-and-escaping.md` for comprehensive examples.
 
 ### Content Format
 Markdown files must include YAML frontmatter with these fields:
@@ -295,15 +328,21 @@ easto/
 
 - `marked@^17.0.1`: Markdown to HTML conversion (ESM)
 - `marked-gfm-heading-id@^4.1.3`: Generate GitHub-style heading IDs (ESM)
-- `gray-matter@^4.0.3`: Parse YAML frontmatter from markdown (battle-tested, used by Gatsby/Next.js/Astro)
 - `feed@^5.2.0`: Generate RSS/Atom/JSON feeds (ESM)
+- **Custom parseFrontmatter()**: YAML frontmatter parser (~52 lines, zero dependencies)
 - Native `fs.cpSync()`: Recursive file copying (Node.js standard library, v16.7.0+)
+
+**Total: 3 external dependencies, 7 packages** (including transitive dependencies)
 
 **Note**: Easto is an ESM (ES Modules) package as of v0.8.0. The package.json includes `"type": "module"`. This is a breaking change from v0.7.x which used CommonJS.
 
-As of v0.8.2 (2026-01-30), easto uses native Node.js APIs when possible (e.g., fs.cpSync for file copying) and actively-maintained, industry-standard dependencies (e.g., gray-matter for frontmatter parsing).
+As of v0.8.3 (2026-01-31), easto uses:
+- Native Node.js APIs when possible (fs.cpSync for file copying, regex for frontmatter parsing)
+- Minimal external dependencies (3 direct, 7 total packages)
+- Custom utility functions for simple tasks (frontmatter parsing)
+- Only actively-maintained, essential dependencies
 
-No build tools, transpilers, or bundlers required - just Node.js and npm.
+No build tools, transpilers, bundlers, or heavy YAML parsers required - just Node.js and npm.
 
 ## Important Implementation Notes
 

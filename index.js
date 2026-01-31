@@ -4,7 +4,6 @@ import { Feed } from 'feed'
 import fs from 'fs'
 import { marked } from 'marked'
 import { gfmHeadingId } from 'marked-gfm-heading-id'
-import matter from 'gray-matter'
 
 // Enable GitHub-style heading IDs
 marked.use(gfmHeadingId())
@@ -40,6 +39,60 @@ const eval_template = (s, params) => {
   (...Object.values(params))
 }
 
+// Parse YAML frontmatter from markdown files
+// Supports: strings, dates (YYYY-MM-DD), booleans, arrays
+const parseFrontmatter = (fileContent) => {
+  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/
+  const match = fileContent.match(frontmatterRegex)
+
+  if (!match) {
+    throw new Error('No frontmatter found. Content must start with ---')
+  }
+
+  const [, frontmatterText, content] = match
+  const data = {}
+
+  frontmatterText.split('\n').forEach(line => {
+    // Skip empty lines and comments
+    if (!line.trim() || line.trim().startsWith('#')) return
+
+    const colonIndex = line.indexOf(':')
+    if (colonIndex === -1) return
+
+    const key = line.slice(0, colonIndex).trim()
+    let value = line.slice(colonIndex + 1).trim()
+
+    // Parse value based on type
+    if (!value) {
+      data[key] = ''
+    } else if (value.startsWith('[') && value.endsWith(']')) {
+      // Array: [item1, item2, item3]
+      const arrayContent = value.slice(1, -1).trim()
+      if (arrayContent === '') {
+        data[key] = []
+      } else {
+        data[key] = arrayContent.split(',').map(item => item.trim())
+      }
+    } else if (value === 'true') {
+      data[key] = true
+    } else if (value === 'false') {
+      data[key] = false
+    } else if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      // Date in YYYY-MM-DD format
+      data[key] = new Date(value)
+    } else if ((value.startsWith('"') && value.endsWith('"')) ||
+               (value.startsWith("'") && value.endsWith("'"))) {
+      // Quoted string - remove quotes and unescape
+      data[key] = value.slice(1, -1).replace(/\\"/g, '"').replace(/\\'/g, "'")
+    } else {
+      // Unquoted string
+      data[key] = value
+    }
+  })
+
+  return { data, content }
+}
+
 const feed_config_blog = CONFIG.feed
 // TODO: fix version which is 2.0 in output, but 0.7 in package.json!?!
 const feed_config_easto = {
@@ -69,11 +122,9 @@ fs
 
     const fileContent = fs.readFileSync(filePath, 'utf-8')
 
-    const { data, content } = matter(fileContent)
-    data.__content = content  // Map to expected property name
-    let fileContentFrontmatter = data
+    const { data: fileContentFrontmatter, content } = parseFrontmatter(fileContent)
 
-    const fileContentHtml = marked.parse(fileContentFrontmatter.__content)
+    const fileContentHtml = marked.parse(content)
 
     const feedItem = {
       title: fileContentFrontmatter.title,

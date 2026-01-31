@@ -20,6 +20,8 @@ FILES=(
     "output/example-post-full-frontmatter"
     "output/markdown-features-test"
     "output/draft-post-example"
+    "output/frontmatter-edge-cases"
+    "output/quotes-and-escaping-test"
     "output/feed/rss"
     "output/feed/atom"
     "output/feed/json"
@@ -37,10 +39,10 @@ echo "   ✅ All expected files exist"
 # Check file contents
 echo "3️⃣  Checking content..."
 
-# Index should have 2 posts (not the draft)
+# Index should have 3 posts (not the drafts)
 POST_COUNT=$(grep -c "class=\"teaser\"" output/index.html)
-if [ "$POST_COUNT" -ne 2 ]; then
-    echo "❌ Expected 2 posts in index, found $POST_COUNT"
+if [ "$POST_COUNT" -ne 3 ]; then
+    echo "❌ Expected 3 posts in index, found $POST_COUNT"
     exit 1
 fi
 echo "   ✅ Index has correct number of posts"
@@ -78,16 +80,46 @@ fi
 echo "   ✅ Headline IDs generated correctly"
 
 # Check that feed timestamps match most recent post date (not current build time)
-# Most recent post is 2024-12-15, so feeds should have that date
-if ! grep -q '<lastBuildDate>Sun, 15 Dec 2024 00:00:00 GMT</lastBuildDate>' output/feed/rss; then
-    echo "❌ RSS feed lastBuildDate should match most recent post date (2024-12-15)"
+# Most recent non-draft post is 2025-01-15, so feeds should have that date
+if ! grep -q '<lastBuildDate>Wed, 15 Jan 2025 00:00:00 GMT</lastBuildDate>' output/feed/rss; then
+    echo "❌ RSS feed lastBuildDate should match most recent post date (2025-01-15)"
     exit 1
 fi
-if ! grep -q '<updated>2024-12-15T00:00:00.000Z</updated>' output/feed/atom; then
-    echo "❌ Atom feed updated should match most recent post date (2024-12-15)"
+if ! grep -q '<updated>2025-01-15T00:00:00.000Z</updated>' output/feed/atom; then
+    echo "❌ Atom feed updated should match most recent post date (2025-01-15)"
     exit 1
 fi
 echo "   ✅ Feed timestamps match most recent post"
+
+# Test frontmatter parsing edge cases
+echo "   Testing frontmatter parser edge cases..."
+
+# Check that edge case post with draft: false is in index
+if ! grep -q "frontmatter-edge-cases" output/index.html; then
+    echo "❌ Edge cases post (draft: false) should appear in index"
+    exit 1
+fi
+
+# Check that quotes-and-escaping post with draft: true is NOT in index
+if grep -q "quotes-and-escaping-test" output/index.html; then
+    echo "❌ Quotes test post (draft: true) should not appear in index"
+    exit 1
+fi
+
+# Verify special characters are parsed correctly in frontmatter-edge-cases file
+# Note: Quotes get HTML-escaped by marked (&quot; and &#39;)
+if ! grep -q 'String with &quot;quotes&quot; and' output/frontmatter-edge-cases; then
+    echo "❌ Special characters in strings not parsed correctly"
+    exit 1
+fi
+
+# Verify URL with colon is parsed correctly
+if ! grep -q 'https://example.com:8080/path' output/frontmatter-edge-cases; then
+    echo "❌ URLs with colons not parsed correctly"
+    exit 1
+fi
+
+echo "   ✅ Frontmatter parser handles edge cases correctly"
 
 # Test serving
 echo "4️⃣  Testing local server..."
