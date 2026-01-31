@@ -108,7 +108,7 @@ Easto is not published to npm for external users, but version numbers help track
 
 ### Current Version
 
-Check `package.json` for the current version. As of 2026-01-30, easto is at version `0.8.1`.
+Check `package.json` for the current version. As of 2026-01-30, easto is at version `0.8.2`.
 
 ## Core Architecture
 
@@ -295,11 +295,13 @@ easto/
 
 - `marked@^17.0.1`: Markdown to HTML conversion (ESM)
 - `marked-gfm-heading-id@^4.1.3`: Generate GitHub-style heading IDs (ESM)
-- `yaml-front-matter@^4.1.1`: Parse YAML frontmatter from markdown (CommonJS, compatible with ESM)
+- `gray-matter@^4.0.3`: Parse YAML frontmatter from markdown (battle-tested, used by Gatsby/Next.js/Astro)
 - `feed@^5.2.0`: Generate RSS/Atom/JSON feeds (ESM)
-- `ncp@^2.0.0`: Recursive file copying (CommonJS, compatible with ESM)
+- Native `fs.cpSync()`: Recursive file copying (Node.js standard library, v16.7.0+)
 
 **Note**: Easto is an ESM (ES Modules) package as of v0.8.0. The package.json includes `"type": "module"`. This is a breaking change from v0.7.x which used CommonJS.
+
+As of v0.8.2 (2026-01-30), easto uses native Node.js APIs when possible (e.g., fs.cpSync for file copying) and actively-maintained, industry-standard dependencies (e.g., gray-matter for frontmatter parsing).
 
 No build tools, transpilers, or bundlers required - just Node.js and npm.
 

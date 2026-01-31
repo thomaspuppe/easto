@@ -4,8 +4,7 @@ import { Feed } from 'feed'
 import fs from 'fs'
 import { marked } from 'marked'
 import { gfmHeadingId } from 'marked-gfm-heading-id'
-import yaml from 'yaml-front-matter'
-import ncp from 'ncp'
+import matter from 'gray-matter'
 
 // Enable GitHub-style heading IDs
 marked.use(gfmHeadingId())
@@ -70,7 +69,9 @@ fs
 
     const fileContent = fs.readFileSync(filePath, 'utf-8')
 
-    let fileContentFrontmatter = yaml.loadFront(fileContent)
+    const { data, content } = matter(fileContent)
+    data.__content = content  // Map to expected property name
+    let fileContentFrontmatter = data
 
     const fileContentHtml = marked.parse(fileContentFrontmatter.__content)
 
@@ -163,16 +164,20 @@ sitemap.addItem(sitemapItem)
 </url> */
 
 
-ncp.ncp(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, err => {
-  if (err) return console.error(err)
+try {
+  fs.cpSync(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, { recursive: true })
   LOG('copied template assets')
-})
+} catch (err) {
+  console.error(err)
+}
 
 // TODO: naming things
-ncp.ncp(DATA_DIR, OUTPUT_DIR, err => {
-  if (err) return console.error(err)
+try {
+  fs.cpSync(DATA_DIR, OUTPUT_DIR, { recursive: true })
   LOG(`copied data files (images, downloads, static content) from "${DATA_DIR}" to "${OUTPUT_DIR}/"`)
-})
+} catch (err) {
+  console.error(err)
+}
 
 // TODO: langsam könnte man auch mal aufteilen :-)
 
