@@ -14,7 +14,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 8000;
-const OUTPUT_DIR = path.join(__dirname, "output");
+const OUTPUT_DIR = process.env.OUTPUT_DIR || path.join(__dirname, "output");
 
 const MIME_TYPES = {
   ".html": "text/html",
