@@ -18,6 +18,22 @@ A lightweight static-site generator written in Node.js. Converts Markdown files 
 npm install
 ```
 
+To use easto in your own project, install from GitHub:
+
+```bash
+npm install thomaspuppe/easto
+```
+
+For local development alongside your project, use `npm link`:
+
+```bash
+# In this repo:
+npm link
+
+# In your project:
+npm link easto
+```
+
 ## Quick Start
 
 Test easto with the included example content:
