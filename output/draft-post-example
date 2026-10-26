@@ -8,6 +8,8 @@
     <meta name="date" content="2023-06-20">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/assets/styles.css"/>
+    <link rel="stylesheet" href="/assets/microlighter/themes/github.css"/>
+    <script type="module" src="/assets/microlighter/microlighter.min.js"></script>
 	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/leaguespartan/leaguespartan-bold.woff2" crossorigin>
 	<link rel="preload" as="font" type="font/woff2" href="/assets/webfonts/sinanova/sinanova-regular.woff2" crossorigin>
 
@@ -22,7 +24,7 @@
     <meta property="og:article:published_time" content="2023-06-20" />
     <meta property="og:article:author" content="Your Name" />
 </head>
-<body>
+<body data-syntax-theme="github">
     <header>
         <p><a href="http://localhost:8000/" rel="home start">Blog von Thomas Puppe, Web Developer.</a></p>
     </header>

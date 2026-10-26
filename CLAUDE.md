@@ -108,7 +108,7 @@ Easto is not published to npm for external users, but version numbers help track
 
 ### Current Version
 
-Check `package.json` for the current version. As of 2026-01-30, easto is at version `0.8.2`.
+Check `package.json` for the current version. As of 2026-10-26, easto is at version `0.9.0`.
 
 ## Core Architecture
 
@@ -135,6 +135,7 @@ Easto uses ES Modules (ESM) with `"type": "module"` in package.json. All imports
    - This prevents unnecessary feed updates when rebuilding without new content
    - Only non-draft posts are considered when determining the most recent date
 8. **Copy Assets**: Uses native `fs.cpSync()` to copy template assets and static files to output directory
+9. **Copy Syntax Highlighter**: Copies `microlighter`'s `dist/` (without `.d.ts`) to `${OUTPUT_DIR}/assets/microlighter/`. Highlighting happens in the browser via the CSS Custom Highlight API. Templates opt in by including `/assets/microlighter/microlighter.min.js`, a theme CSS from `/assets/microlighter/themes/`, and `data-syntax-theme="<theme>"` on `<body>`. Fenced code blocks with a language (```` ```js ````) become `<pre><code class="language-js">`, which microlighter picks up
 
 ### Template System
 Templates use a custom evaluation system (`eval_template` function at index.js:35-38) that creates a new Function with parameters and evaluates template strings as JavaScript template literals.
@@ -329,16 +330,17 @@ easto/
 - `marked@^17.0.1`: Markdown to HTML conversion (ESM)
 - `marked-gfm-heading-id@^4.1.3`: Generate GitHub-style heading IDs (ESM)
 - `feed@^5.2.0`: Generate RSS/Atom/JSON feeds (ESM)
+- `microlighter@^2.2.0`: Client-side syntax highlighting (zero dependencies, files are copied to output, not run by easto)
 - **Custom parseFrontmatter()**: YAML frontmatter parser (~52 lines, zero dependencies)
 - Native `fs.cpSync()`: Recursive file copying (Node.js standard library, v16.7.0+)
 
-**Total: 3 external dependencies, 7 packages** (including transitive dependencies)
+**Total: 4 external dependencies, 8 packages** (including transitive dependencies)
 
 **Note**: Easto is an ESM (ES Modules) package as of v0.8.0. The package.json includes `"type": "module"`. This is a breaking change from v0.7.x which used CommonJS.
 
 As of v0.8.3 (2026-01-31), easto uses:
 - Native Node.js APIs when possible (fs.cpSync for file copying, regex for frontmatter parsing)
-- Minimal external dependencies (3 direct, 7 total packages)
+- Minimal external dependencies (4 direct, 8 total packages, as of v0.9.0)
 - Custom utility functions for simple tasks (frontmatter parsing)
 - Only actively-maintained, essential dependencies
 
@@ -388,13 +390,14 @@ The `test.sh` script is a simple bash script (no testing framework) that:
 5. Validates localhost URLs are used
 6. Verifies headline IDs are generated correctly (tests `marked-gfm-heading-id` extension)
    - Checks both h2 and h3 elements have proper `id` attributes
-7. Verifies feed timestamps match most recent post date (not current build time)
+7. Verifies syntax highlighting setup (microlighter assets copied, `language-*` class on code blocks)
+8. Verifies feed timestamps match most recent post date (not current build time)
    - Tests RSS `lastBuildDate` and Atom `updated` fields
    - Ensures feeds don't change when rebuilding without new content
-8. Starts the dev server temporarily
-9. Tests HTTP requests to index and extensionless files
-10. Validates Content-Type headers (text/html for posts, text/css for CSS)
-11. Stops the server and reports results
+9. Starts the dev server temporarily
+10. Tests HTTP requests to index and extensionless files
+11. Validates Content-Type headers (text/html for posts, text/css for CSS, text/javascript for JS)
+12. Stops the server and reports results
 
 Tests exit with code 0 on success, non-zero on failure (suitable for CI/CD).
 

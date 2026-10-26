@@ -214,6 +214,12 @@ header a {
 	padding-left: 0.5ch;
 	padding-right: 0.5ch;
 }
+.post pre code {
+	font-size: inherit;
+	background: none;
+	color: inherit;
+	padding: 0;
+}
 
 ins {
 	text-decoration-style: wavy;

@@ -26,6 +26,9 @@ FILES=(
     "output/feed/atom"
     "output/feed/json"
     "output/assets/styles.css"
+    "output/assets/microlighter/microlighter.min.js"
+    "output/assets/microlighter/grammars/javascript.js"
+    "output/assets/microlighter/themes/github.css"
 )
 
 for file in "${FILES[@]}"; do
@@ -78,6 +81,17 @@ if ! grep -q '<h3 id="lists">' output/example-post-full-frontmatter; then
     exit 1
 fi
 echo "   ✅ Headline IDs generated correctly"
+
+# Check that code blocks carry the language class microlighter needs
+if ! grep -q '<pre><code class="language-javascript">' output/markdown-features-test; then
+    echo "❌ Code block with language should have class=\"language-javascript\""
+    exit 1
+fi
+if ls output/assets/microlighter/*.d.ts > /dev/null 2>&1; then
+    echo "❌ TypeScript declarations should not be copied to output"
+    exit 1
+fi
+echo "   ✅ Syntax highlighting assets and markup in place"
 
 # Check that feed timestamps match most recent post date (not current build time)
 # Most recent non-draft post is 2025-01-15, so feeds should have that date
@@ -165,9 +179,18 @@ if [[ "$CONTENT_TYPE" != "text/css" ]]; then
 fi
 echo "   ✅ Content-Type correct for CSS"
 
+# Test JS (module scripts need a JavaScript MIME type)
+CONTENT_TYPE=$(curl -s -I http://localhost:8000/assets/microlighter/microlighter.min.js | grep -i "content-type" | cut -d: -f2 | tr -d ' \r')
+if [[ "$CONTENT_TYPE" != "text/javascript" ]]; then
+    echo "❌ Wrong content type for JS: $CONTENT_TYPE"
+    kill $SERVER_PID 2>/dev/null
+    exit 1
+fi
+echo "   ✅ Content-Type correct for JS"
+
 # Stop server
 kill $SERVER_PID 2>/dev/null
-wait $SERVER_PID 2>/dev/null
+wait $SERVER_PID 2>/dev/null || true  # killed server exits with 143, which would trip set -e
 
 echo ""
 echo "✅ All tests passed!"

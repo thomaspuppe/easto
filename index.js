@@ -2,6 +2,8 @@ console.time('🚀 Easto')
 
 import { Feed } from 'feed'
 import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import { marked } from 'marked'
 import { gfmHeadingId } from 'marked-gfm-heading-id'
 
@@ -218,6 +220,19 @@ sitemap.addItem(sitemapItem)
 try {
   fs.cpSync(`${TEMPLATES_DIR}/assets`, `${OUTPUT_DIR}/assets`, { recursive: true })
   LOG('copied template assets')
+} catch (err) {
+  console.error(err)
+}
+
+// Syntax highlighting runs in the browser (CSS Custom Highlight API), so we only ship the files.
+// Templates include /assets/microlighter/microlighter.min.js and a theme from /assets/microlighter/themes/
+try {
+  const microlighterDir = path.dirname(fileURLToPath(import.meta.resolve('microlighter')))
+  fs.cpSync(microlighterDir, `${OUTPUT_DIR}/assets/microlighter`, {
+    recursive: true,
+    filter: src => !src.endsWith('.d.ts')
+  })
+  LOG('copied microlighter (syntax highlighting)')
 } catch (err) {
   console.error(err)
 }

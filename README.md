@@ -7,6 +7,7 @@ A lightweight static-site generator written in Node.js. Converts Markdown files 
 - 📝 Markdown to HTML conversion using [marked](https://marked.js.org/)
 - 📰 YAML frontmatter parsing
 - 🔖 RSS, Atom, and JSON feed generation
+- 🖍️ Syntax highlighting via [MicroLighter](https://davatron5000.github.io/microlighter/) (client-side, opt-in per template)
 - 📄 Custom templates using JavaScript template literals
 - 🎨 Asset copying (CSS, images, etc.)
 - ⚡ Fast build times (typically <100ms for small blogs)
@@ -232,6 +233,28 @@ If you have Caddy installed, use this configuration:
 7. **Apply Templates**: Evaluates templates with content and metadata
 8. **Generate Feeds**: Creates RSS, Atom, and JSON feeds
 9. **Copy Assets**: Copies template assets and data files to output
+10. **Copy Syntax Highlighter**: Copies MicroLighter to `output/assets/microlighter/`
+
+## Syntax Highlighting
+
+easto copies [MicroLighter](https://davatron5000.github.io/microlighter/) to `output/assets/microlighter/`. Highlighting runs in the browser, so add this to your `post.html` to use it:
+
+```html
+<link rel="stylesheet" href="/assets/microlighter/themes/github.css"/>
+<script type="module" src="/assets/microlighter/microlighter.min.js"></script>
+...
+<body data-syntax-theme="github">
+```
+
+Then write code blocks with a language:
+
+````markdown
+```js
+const answer = 42
+```
+````
+
+For raw HTML, use `<pre><code class="language-css">…</code></pre>`. Available themes are in `node_modules/microlighter/dist/themes/`.
 
 ## Draft Posts
 
